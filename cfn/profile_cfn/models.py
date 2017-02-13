@@ -3,11 +3,9 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-# Create your models here.
-
 
 class ProfileCfn(models.Model):
-    """The profile for a CFN user."""
+    """The profile model for a CFN user."""
 
     user = models.OneToOneField(
         User,
@@ -21,6 +19,11 @@ class ProfileCfn(models.Model):
         related_name='followed_by',
         symmetrical=False,
     )
+
+    @property
+    def is_active(self):
+        """Return true if the user is authenticated."""
+        return self.user.is_active
 
 
 @receiver(post_save, sender=User)
