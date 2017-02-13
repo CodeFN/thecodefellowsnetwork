@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^logout/', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^admin/', admin.site.urls),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
+    url(r'^profile/', include('profile_cfn.urls')),
 ]

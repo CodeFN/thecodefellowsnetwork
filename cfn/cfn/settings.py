@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cfn',
     'social_django',
+    'profile_cfn',
 ]
 
 MIDDLEWARE = [
