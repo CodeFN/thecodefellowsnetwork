@@ -1,0 +1,24 @@
+* {
+    color: white;
+/*     outline: 1px solid red; */
+}
+
+.homebox{
+    border: 1px solid red;
+    border-radius: 5%;
+    height:200px;
+    margin: 1%;
+    background-color: gray;
+}
+
+.homebox_header{
+    background-color: white;
+    width: 100%;
+    color: black;
+    padding: 0;
+    margin:0;
+}
+
+.homebox_header h3{
+    color: black;
+}

@@ -1,0 +1,14 @@
+[run]
+source =
+    cfn
+
+omit =
+    */migrations/*
+    */tests.py
+    manage.py
+    cfn/wsgi.py
+    */apps.py
+    */wsgi.py
+
+[report]
+show_missing = True

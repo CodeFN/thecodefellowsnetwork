@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/examples/signin/signin.css' %}">
+{% endblock %}
+
+{% block body %}
+        <a href="{% url 'social:begin' 'github' %}"><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></a><br>
+
+{% endblock %}
