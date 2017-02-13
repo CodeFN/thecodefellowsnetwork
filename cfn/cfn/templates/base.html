@@ -1,34 +1,44 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/bootstrap.min.css' %}">
     <link href="{% static 'style.css' %}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Changa+One|Kalam|VT323" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'source/jquery.fancybox.css' %}" type="text/css" media="screen" />
-    <link rel="stylesheet" href="{% static 'source/helpers/jquery.fancybox-thumbs.css' %}" type="text/css" media="screen" />
     {% block css %}{% endblock %}
-</head>
-<body>
-    <div class="container">
-     <ul>
-              {% if user.is_authenticated %}
-              <li><a href="{% url 'logout' %}">Logout</a></li>
-              {% else %}
-              <li><a href="{% url 'login' %}">Register</a></li>
-              <li class="active"><a href="{% url 'login' %}">Login <span class="sr-only">(current)</span></a></li>
-              {% endif %}
-            </ul>
-        {% block body %}{% endblock %}
+  </head>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{% url 'home' %}">Logo</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="{% url 'home' %}">Home</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+            <li><a href="{% url 'login' %}">Register</a></li>
+            <li class="active"><a href="{% url 'login' %}">Login <span class="sr-only">(current)</span></a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <body>
+  
+      {% block body %}{% endblock %}
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="{% static 'source/jquery.fancybox.pack.js' %}"></script>
-    <script type="text/javascript" src="{% static 'source/helpers/jquery.fancybox-thumbs.js' %}"></script>
     {% block scripts %}{% endblock %}
-</body>
+  </body>
 </html>
