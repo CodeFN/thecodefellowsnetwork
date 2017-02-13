@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+{% block css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/examples/signin/signin.css' %}">
+{% endblock %}
+
+{% block body %}
+    <form method="post" class="form-signin">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">Please sign in</h2>
+        {{ form.as_p }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <br>
+            <p><strong>-- OR --</strong></p>
+        <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
+    </form>
+
+{% endblock %}
