@@ -14,31 +14,15 @@
     {% block css %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{% url 'home' %}">jaims</a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
- 
-            <ul class="nav navbar-nav navbar-right">
+    <div class="container">
+     <ul>
               {% if user.is_authenticated %}
               <li><a href="{% url 'logout' %}">Logout</a></li>
               {% else %}
-              <li><a href="{% url 'registration_register' %}">Register</a></li>
+              <li><a href="{% url 'login' %}">Register</a></li>
               <li class="active"><a href="{% url 'login' %}">Login <span class="sr-only">(current)</span></a></li>
               {% endif %}
             </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-    </nav>
-    <div class="container">
         {% block body %}{% endblock %}
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
