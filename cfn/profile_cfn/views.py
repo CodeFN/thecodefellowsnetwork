@@ -1,8 +1,8 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView
 from profile_cfn.models import ProfileCfn
-from django.shortcuts import redirect
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -50,7 +50,18 @@ class ProfileViewOther(LoginRequiredMixin, DetailView):
         profile = ProfileCfn.objects.get(user__username=self.kwargs['slug'])
         follows = profile.follows.all()
         followed_by = profile.user.followed_by.all()
+        user_follows = self.request.user.profile.follows.all()
         context['profile'] = profile
         context['follows'] = follows
         context['followed_by'] = followed_by
+        context['user_follows'] = user_follows
         return context
+
+    def post(self, request, *args, **kwargs):
+        to_follow = User.objects.get(username=kwargs['slug'])
+        followed_list = self.request.user.profile.follows.all()
+        if to_follow in followed_list:
+            self.request.user.profile.follows.remove(to_follow)
+        else:
+            self.request.user.profile.follows.add(to_follow)
+        return HttpResponseRedirect("/profile/" + kwargs['slug'])

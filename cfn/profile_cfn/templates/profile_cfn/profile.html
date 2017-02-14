@@ -2,11 +2,17 @@
 
 {% block body %}
 <ul>
-    {% if not request.user.is_authenticated %}
-        {% if profile.user in followed_by %}
-            <button type="submit">Unfollow</button>
+    {% if request.user != profile.user %}
+        {% if profile.user in user_follows %}
+            <form action='' method='POST'>
+                {% csrf_token %}
+                <button type="submit" name="unfollow">Unfollow</button>
+            </form>
         {% else %}
-            <button type="submit">Follow</button>
+            <form action='' method='POST'>
+            {% csrf_token %}
+                <button type="submit" name="follow">Follow</button>
+            </form>
         {% endif %}
     {% endif %}
     <div class="container">
