@@ -65,17 +65,13 @@ class FrontendTests(TestCase):
         response = self.client.get("/profile/")
         self.assertTrue(response.status_code == 302)
 
-    # def test_other_profile_view_authenticated_returns_status_ok(self):
-    #     """Test other profile view with authenticated client returns status code 200."""
-    #     import pdb; pdb.set_trace()
-    #     self.add_user()
-    #     self.client.login(username='test_user', password='testpassword')
-    #     new_user = UserFactory.create()
-    #     new_user.username = 'new_user'
-    #     new_user.set_password('testpassword')
-    #     new_user.save()
-    #     response = self.client.get('profile/new_user')
-    #     self.assertTrue(response.status_code == 200)
+    def test_other_profile_view_authenticated_returns_status_ok(self):
+        """Test other profile view with authenticated client returns status code 200."""
+        self.add_user()
+        self.client.login(username='test_user', password='testpassword')
+        new_user = UserFactory.create()
+        response = self.client.get('/profile/' + new_user.username, follow=True)
+        self.assertTrue(response.status_code == 200)
 
     def test_other_profile_view_unauthenticated_returns_status_redirect(self):
         """Test other profile view with unauthenticated client returns status code 301."""
