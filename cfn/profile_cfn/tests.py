@@ -38,6 +38,22 @@ class BackendTests(TestCase):
         username = self.users[0].username
         self.assertTrue(profile.user.username == username)
 
+    def test_profile_model_returns_string(self):
+        """Test that user model returns string for Py2 compatibility."""
+        assert type(str(UserFactory.create())) == str
+
+    def test_profile_model_returns_string_part_2(self):
+        """Test that user model returns string for Py2 compatibility."""
+        assert type(str(ProfileCfn.objects.first())) == str
+
+    def test_profile_model_returns_is_active(self):
+        """Test that user model returns bool on is_active."""
+        assert type((ProfileCfn.objects.first().is_active)) == bool
+
+    def test_inactive_profile_model_user_is_inactive(self):
+        """Test that user profile model is inactive by default."""
+        assert type((ProfileCfn.objects.first().is_active)) == bool
+
 
 class FrontendTests(TestCase):
     """User/profile frontend test runner."""
@@ -101,18 +117,3 @@ class FrontendTests(TestCase):
         response = self.client.get("/profile/")
         self.assertTemplateUsed(response, "base.html")
         self.assertTemplateUsed(response, "profile_cfn/profile.html")
-
-    def test_profile_model_returns_string(self):
-        """Test that user model returns string for Py2 compatibility."""
-        self.add_user()
-        assert type(str(UserFactory.create())) == str
-
-    def test_profile_model_returns_string_part_2(self):
-        """Test that user model returns string for Py2 compatibility."""
-        self.add_user()
-        assert type(str(ProfileCfn.objects.first())) == str
-
-    def test_profile_model_returns_is_active(self):
-        """Test that user model returns string for Py2 compatibility."""
-        self.add_user()
-        assert type((ProfileCfn.objects.first().is_active)) == bool
