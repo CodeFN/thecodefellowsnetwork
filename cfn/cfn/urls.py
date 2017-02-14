@@ -19,11 +19,6 @@ from django.contrib.auth import views as auth_views
 
 from cfn.views import HomeView
 
-try:
-    from urllib.parse import urlparse
-except ImportError:
-    from urlparse import urlparse
-
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^registration/', include('registration.backends.hmac.urls')),
