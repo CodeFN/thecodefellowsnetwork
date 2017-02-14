@@ -23,7 +23,7 @@ script:
 # safelist
 branches:
   only:
-  - testing
+  - profile
 
 notifications:
   email: false

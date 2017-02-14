@@ -1,7 +1,9 @@
+"""CFN Tests."""
+
 from django.test import TestCase, Client, RequestFactory
 from django.contrib.auth.models import User
 from profile_cfn.models import ProfileCfn
-from profile_cfn.views import ProfileView
+# from profile_cfn.views import ProfileView
 import factory
 
 
@@ -70,7 +72,8 @@ class FrontendTests(TestCase):
         self.add_user()
         self.client.login(username='test_user', password='testpassword')
         new_user = UserFactory.create()
-        response = self.client.get('/profile/' + new_user.username, follow=True)
+        response = self.client.get(
+            '/profile/' + new_user.username, follow=True)
         self.assertTrue(response.status_code == 200)
 
     def test_other_profile_view_unauthenticated_returns_status_redirect(self):
@@ -98,3 +101,13 @@ class FrontendTests(TestCase):
         response = self.client.get("/profile/")
         self.assertTemplateUsed(response, "base.html")
         self.assertTemplateUsed(response, "profile_cfn/profile.html")
+
+    def test_user_model_returns_string(self):
+        """Test that user model returns string for Py2 compatibility."""
+        self.add_user()
+        assert type(str(UserFactory.create())) == str
+
+    def test_user_model_returns_string_part_2(self):
+        """Test that user model returns string for Py2 compatibility."""
+        self.add_user()
+        assert type(str(ProfileCfn.objects.first())) == str
