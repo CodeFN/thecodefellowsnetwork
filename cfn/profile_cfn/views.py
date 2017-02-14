@@ -17,11 +17,10 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, username=None):
         """Get profile information."""
-        if self.request.user.is_authenticated():
-            profile = self.request.user.profile
-            return {
-                'profile': profile,
-            }
+        profile = self.request.user.profile
+        return {
+            'profile': profile,
+        }
 
 
 class ProfileViewOther(LoginRequiredMixin, DetailView):
