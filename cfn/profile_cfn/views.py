@@ -17,10 +17,22 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, username=None):
         """Get profile information."""
-        profile = self.request.user.profile
-        return {
-            'profile': profile,
-        }
+        if self.request.user.is_authenticated():
+            profile = self.request.user.profile
+            follows = profile.follows.all()
+            followed_by = self.request.user.followed_by.all()
+            return {
+                'profile': profile,
+                'follows': follows,
+                'followed_by': followed_by,
+            }
+        else:
+            error_message = "You must sign in to do that!"
+            return {'error': error_message}
+
+    def __str__(self):
+        """String representation of a user profile."""
+        return self.user
 
 
 class ProfileViewOther(LoginRequiredMixin, DetailView):
@@ -36,5 +48,9 @@ class ProfileViewOther(LoginRequiredMixin, DetailView):
         """Get profile information and return it."""
         context = super(ProfileViewOther, self).get_context_data(**kwargs)
         profile = ProfileCfn.objects.get(user__username=self.kwargs['slug'])
+        follows = profile.follows.all()
+        followed_by = profile.user.followed_by.all()
         context['profile'] = profile
+        context['follows'] = follows
+        context['followed_by'] = followed_by
         return context

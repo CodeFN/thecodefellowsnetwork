@@ -2,11 +2,30 @@
 
 {% block body %}
 <ul>
+    {% if not request.user.is_authenticated %}
+        {% if profile.user in followed_by %}
+            <button type="submit">Unfollow</button>
+        {% else %}
+            <button type="submit">Follow</button>
+        {% endif %}
+    {% endif %}
     <div class="container">
         <h1>{{ profile.user.username }}'s profile</h1>
         <p>Picture: {{ profile.profile_picture }}</p>
         <p>About: {{ profile.about }}</p>
-        <p>Follows: {{ profile.follows }}</p>
     </div>
+    <div class="container">
+    <h3>Following:</h3>
+    {% for fellow in follows %}
+        <p>Follows: {{ fellow.username }}</p>
+    {% endfor %}
+    </div>
+    <div class="container">
+    <h3>Followed By:</h3>
+    {% for fellow in followed_by %}
+        <p>Follows: {{ fellow.user.username }}</p>
+    {% endfor %}
+    </div>
+
 </ul>
 {% endblock %}
