@@ -2,11 +2,16 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView
 from profile_cfn.models import ProfileCfn
+from django.shortcuts import redirect
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ProfileView(TemplateView):
+class ProfileView(LoginRequiredMixin, TemplateView):
     """Class based view for logged in user's profile."""
 
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
     template_name = 'profile_cfn/profile.html'
     model = ProfileCfn
 
@@ -17,14 +22,13 @@ class ProfileView(TemplateView):
             return {
                 'profile': profile,
             }
-        else:
-            error_message = "You must sign in to do that!"
-            return {'error': error_message}
 
 
-class ProfileViewOther(DetailView):
+class ProfileViewOther(LoginRequiredMixin, DetailView):
     """"Profile view of other users."""
 
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
     template_name = 'profile_cfn/profile.html'
     model = ProfileCfn
     slug_field = 'user__username'
