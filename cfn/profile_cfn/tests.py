@@ -102,12 +102,17 @@ class FrontendTests(TestCase):
         self.assertTemplateUsed(response, "base.html")
         self.assertTemplateUsed(response, "profile_cfn/profile.html")
 
-    def test_user_model_returns_string(self):
+    def test_profile_model_returns_string(self):
         """Test that user model returns string for Py2 compatibility."""
         self.add_user()
         assert type(str(UserFactory.create())) == str
 
-    def test_user_model_returns_string_part_2(self):
+    def test_profile_model_returns_string_part_2(self):
         """Test that user model returns string for Py2 compatibility."""
         self.add_user()
         assert type(str(ProfileCfn.objects.first())) == str
+
+    def test_profile_model_returns_is_active(self):
+        """Test that user model returns string for Py2 compatibility."""
+        self.add_user()
+        assert type((ProfileCfn.objects.first().is_active)) == bool
