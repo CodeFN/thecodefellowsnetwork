@@ -14,11 +14,7 @@ class ProfileCfn(models.Model):
     )
     profile_picture = models.ImageField(upload_to='profile_picture')
     about = models.TextField(max_length=1028, blank=True)
-    follows = models.ManyToManyField(
-        'self',
-        related_name='followed_by',
-        symmetrical=False,
-    )
+    follows = models.ManyToManyField(User, related_name='followed_by')
 
     @property
     def is_active(self):
