@@ -1,0 +1,32 @@
+language: python
+python:
+  # - "2.7"
+  - "3.5"
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c "create database cfn_db;" -U postgres
+
+# command to install dependencies
+install:
+  - pip install -r requirements.pip
+
+# command to run tests
+script: 
+  - cd cfn
+  - python manage.py migrate
+  - coverage run manage.py test
+  - cp .coverage ../
+
+# safelist
+branches:
+  only:
+  - master
+
+notifications:
+  email: false
+
+after_success:
+  - coveralls
