@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/CodeFN/thecodefellowsnetwork.svg?branch=testing)](https://travis-ci.org/CodeFN/thecodefellowsnetwork) 
+[![Build Status](https://travis-ci.org/CodeFN/thecodefellowsnetwork.svg?branch=testing)](https://travis-ci.org/CodeFN/thecodefellowsnetwork) [![Coverage Status](https://coveralls.io/repos/github/CodeFN/thecodefellowsnetwork/badge.svg?branch=testing)](https://coveralls.io/github/CodeFN/thecodefellowsnetwork?branch=testing)
 
 # thecodefellowsnetwork
 The perfect network for the code academy
