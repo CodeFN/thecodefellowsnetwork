@@ -93,3 +93,7 @@ bin/
 lib64
 pip-selfcheck.json
 pyvenv.cfg
+
+# media stuff
+cfn/MEDIA/*
+!cfn/MEDIA/.gitkeep

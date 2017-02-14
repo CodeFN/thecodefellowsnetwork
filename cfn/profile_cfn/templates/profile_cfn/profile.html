@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block body %}
 <ul>
     {% if request.user != profile.user %}
@@ -14,24 +14,54 @@
                 <button type="submit" name="follow">Follow</button>
             </form>
         {% endif %}
+    {% else %}
+        <a href="{% url 'edit_profile' %}"><button>Update Profile</button></a>
     {% endif %}
     <div class="container">
         <h1>{{ profile.user.username }}'s profile</h1>
-        <p>Picture: {{ profile.profile_picture }}</p>
+        {% if profile.profile_picture %}
+            <img src="{{ profile.profile_picture.url }}" height = 100, width= 100/>
+        {% else %}
+            <img src="{% static 'cf_logo.png' %}"height = 100, width= 100/>
+        {% endif %}
         <p>About: {{ profile.about }}</p>
     </div>
-    <div class="container">
+
+<div class="container text-center"> 
+ {% if follows %}  
+    <div class="row">
     <h3>Following:</h3>
     {% for fellow in follows %}
-        <p>Follows: {{ fellow.username }}</p>
+        <a href="{% url 'profile_other' fellow.username %}"><div class="col-sm-2">
+            {% if fellow.profile.profile_picture %}
+                <img src="{{ fellow.profile.profile_picture.url }}" class="img-responsive" style="width:100%" alt="Image"height = 100, width= 100>
+            {% else %}
+                <img src="{% static 'cf_logo.png' %}"height = 100, width= 100/>
+            {% endif %}
+        <p>{{ fellow.username }}</p>
+        </div></a>
     {% endfor %}
-    </div>
-    <div class="container">
-    <h3>Followed By:</h3>
-    {% for fellow in followed_by %}
-        <p>Follows: {{ fellow.user.username }}</p>
-    {% endfor %}
+    {% endif %}
     </div>
 
+     {% if followed_by %}
+    <div class="row">
+    <h3>Followed By:</h3>
+    {% for fellow in followed_by %}
+         <a href="{% url 'profile_other' fellow.user.username %}"><div class="col-sm-2">
+        {% if fellow.profile_picture %}
+            <img src="{{ fellow.profile_picture.url }}" class="img-responsive" style="width:100%" alt="Image"height = 100, width= 100>
+        {% else %}
+            <img src="{% static 'cf_logo.png' %}"height = 100, width= 100/>
+        {% endif %}
+      <p>{{ fellow.user.username }}</p>
+    </div></a>
+        
+    {% endfor %}
+    {% endif %}
+    </div>
+    </div><br>
+
 </ul>
-{% endblock %}
+{% endblock %} 
+ 

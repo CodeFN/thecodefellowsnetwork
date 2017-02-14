@@ -1,7 +1,9 @@
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, UpdateView
 from profile_cfn.models import ProfileCfn
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+from profile_cfn.forms import EditProfileForm
+from django.urls import reverse_lazy
 
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -65,3 +67,28 @@ class ProfileViewOther(LoginRequiredMixin, DetailView):
         else:
             self.request.user.profile.follows.add(to_follow)
         return HttpResponseRedirect("/profile/" + kwargs['slug'])
+
+
+class EditProfileView(UpdateView):
+    """Update profile."""
+
+    login_required = True
+    template_name = 'profile_cfn/edit_profile.html'
+    success_url = reverse_lazy('profile_self')
+    form_class = EditProfileForm
+    model = ProfileCfn
+
+    def get_object(self):
+        """Define what profile to edit."""
+        return self.request.user.profile
+
+    def form_valid(self, form):
+        """If form post is successful, set the object's owner."""
+        self.object = form.save()
+        self.object.user.first_name = form.cleaned_data['First Name']
+        self.object.user.last_name = form.cleaned_data['Last Name']
+        self.object.user.profile.profile_picture = form.cleaned_data['profile_picture']
+        self.object.user.profile.save()
+        self.object.user.save()
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
