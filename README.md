@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/CodeFN/thecodefellowsnetwork.svg?branch=testing)](https://travis-ci.org/CodeFN/thecodefellowsnetwork) 
+
 # thecodefellowsnetwork
 The perfect network for the code academy
 
