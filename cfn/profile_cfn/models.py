@@ -25,6 +25,10 @@ class ProfileCfn(models.Model):
         """Return true if the user is authenticated."""
         return self.user.is_active
 
+    def __str__(self):
+        """String representation of profile."""
+        return self.user.username
+
 
 @receiver(post_save, sender=User)
 def make_user_profile(sender, instance, **kwargs):

@@ -1,6 +1,7 @@
 from django.conf.urls import url
-from profile_cfn.views import ProfileCfnView
+from profile_cfn.views import ProfileView, ProfileViewOther
 
 urlpatterns = [
-    url(r'^$', ProfileCfnView.as_view(), name="profile_cfn"),
+    url(r'^$', ProfileView.as_view(), name="profile_self"),
+    url(r'(?P<slug>\w+)/$', ProfileViewOther.as_view(), name="profile_other"),
 ]
