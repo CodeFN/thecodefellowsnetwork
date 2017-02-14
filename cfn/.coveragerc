@@ -1,6 +1,7 @@
 [run]
 source =
     cfn
+    profile_cfn
 
 omit =
     */migrations/*
@@ -9,6 +10,7 @@ omit =
     cfn/wsgi.py
     */apps.py
     */wsgi.py
+    */settings.py
 
 [report]
 show_missing = True
