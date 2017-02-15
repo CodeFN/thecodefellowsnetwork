@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'cfn',
     'social_django',
     'profile_cfn',
-
+    'posts',
 ]
 
 MIDDLEWARE_CLASSES = [

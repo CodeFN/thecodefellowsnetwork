@@ -1,0 +1,16 @@
+{% extends 'cfn/base.html' %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+<h2>Photos</h2>
+
+<div class="stacks">
+{% for post in posts %}
+
+{{ post.title }}
+
+{% endfor %}
+</div>
+
+{% endblock %}
