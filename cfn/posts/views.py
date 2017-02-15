@@ -16,7 +16,7 @@ class PostsView(ListView):
 
     def get_context_data(self):
         """."""
-        all_posts = Post.objects.all()
+        all_posts = Post.objects.all().order_by('-id')
         return {'posts': all_posts}
 
     def get_queryset(self):
