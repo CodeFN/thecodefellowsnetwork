@@ -1,12 +1,12 @@
 """Post views."""
 
-# from django.shortcuts import render
-from django.views.generic import ListView
-from django.views.generic.edit import CreateView
+from django.http import Http404
 from django.urls import reverse_lazy
+from django.views.generic import ListView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView
 
 from posts.models import Post
-from posts.forms import AddPostForm
+from posts.forms import AddPostForm, EditPostForm
 
 
 class PostsView(ListView):
@@ -39,8 +39,8 @@ class PostView(ListView):
 class NewPostView(CreateView):
     """."""
 
-    template_name = "posts/new_post.html"
     model = Post
+    template_name = "posts/new_post.html"
     success_url = reverse_lazy('posts')
     form_class = AddPostForm
 
@@ -50,7 +50,37 @@ class NewPostView(CreateView):
         return super(NewPostView, self).form_valid(form)
 
 
-class EditPostView(ListView):
+class EditPostView(UpdateView):
     """."""
 
-    pass
+    model = Post
+    template_name = "posts/edit_post.html"
+    success_url = reverse_lazy('posts')
+    form_class = EditPostForm
+
+    def get_object(self, queryset=None):
+        """."""
+        post_to_edit = Post.objects.get(id=self.kwargs['pk'])
+        if not post_to_edit.author == self.request.user:
+            raise Http404
+        return post_to_edit
+
+    def form_valid(self, form):
+        """."""
+        form.instance.author = self.request.user
+        return super(EditPostView, self).form_valid(form)
+
+
+class DeletePostView(DeleteView):
+    """Delete a post."""
+
+    model = Post
+    success_url = reverse_lazy('posts')
+    template_name = 'posts/confirm_delete.html'
+
+    def get_object(self, queryset=None):
+        """Get the post to delete."""
+        post_to_delete = Post.objects.get(id=self.kwargs['pk'])
+        if not post_to_delete.author == self.request.user:
+            raise Http404
+        return post_to_delete

@@ -21,4 +21,17 @@
 {% endif %}
 <p>{{ post.content }}</p>
 
+{% if post.author.username == user.username %}
+<p>
+  <a href="{% url 'edit_post' pk=post.id %}">
+    Edit this post
+  </a>
+</p>
+<p>
+  <a href="{% url 'delete_post' pk=post.id %}">
+    Delete this post
+  </a>
+</p>
+{% endif %}
+
 {% endblock %}

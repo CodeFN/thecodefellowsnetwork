@@ -41,11 +41,13 @@
         {{ post.date_uploaded|timesince }} ago
       </td>
       <td>
-        {% if post.content|length > 20 %}
-          {{ post.content|slice:":20" }}...
-        {% else %}
-          {{ post.content }}
-        {% endif %}
+        <a href="{% url 'post' pk=post.id %}">
+          {% if post.content|length > 20 %}
+            {{ post.content|slice:":20" }}...
+          {% else %}
+            {{ post.content }}
+          {% endif %}
+        </a>
       </td>
     </tr>
     {% endfor %}

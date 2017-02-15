@@ -18,7 +18,12 @@ class Post(models.Model):
         on_delete=models.CASCADE,
     )
     title = models.CharField(max_length=255)
-    category = models.CharField(max_length=75)
+    CHOICE_CATEGORY = (
+        ('Note', 'Note'),
+        ('Project', 'Project'),
+        ('Link', 'Link'),
+    )
+    category = models.CharField(max_length=75, choices=CHOICE_CATEGORY)
     content = models.TextField(max_length=15000)
     content_rendered = models.TextField(max_length=75000)
     url = models.CharField(max_length=500, null=True)
