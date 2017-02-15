@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block body %}
+<h2>"{{ post.title }}"</h2>
+<h4>Category: {{ post.category }}</h4>
+<h4>Author: {{ post.author.username }}</h4>
+<h4>Post Created: {{ post.date_uploaded }}</h4>
+<h4>Last Modified: {{ post.date_modified }}</h4>
+{% if post.image %}
+<img src="{{ post.image.url }}">
+{% endif %}
+<p>{{ post.content }}</p>
+
+{% endblock %}

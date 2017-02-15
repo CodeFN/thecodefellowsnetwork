@@ -6,6 +6,7 @@ from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 
 from posts.models import Post
+from posts.forms import AddPostForm
 
 
 class PostsView(ListView):
@@ -15,16 +16,8 @@ class PostsView(ListView):
 
     def get_context_data(self):
         """."""
-        posts = []
-        user = self.request.user
-        following = []
-        for user in user.follows:
-            following.append(user.username)
         all_posts = Post.objects.all()
-        for post in all_posts:
-            if post.author.username in following:
-                posts.append(post)
-        return {'posts': posts}
+        return {'posts': all_posts}
 
     def get_queryset(self):
         """."""
@@ -34,20 +27,26 @@ class PostsView(ListView):
 class PostView(ListView):
     """."""
 
-    pass
+    template_name = 'posts/post.html'
+    model = Post
+
+    def get_context_data(self):
+        """."""
+        self.post = Post.objects.get(id=self.kwargs['pk'])
+        return {'post': self.post}
 
 
 class NewPostView(CreateView):
     """."""
 
-    template_name = "posts/add_post.html"
+    template_name = "posts/new_post.html"
     model = Post
-    fields = ['title', 'category', 'content', 'url', 'image']
     success_url = reverse_lazy('posts')
+    form_class = AddPostForm
 
     def form_valid(self, form):
         """."""
-        form.instance.user = self.request.user
+        form.instance.author = self.request.user
         return super(NewPostView, self).form_valid(form)
 
 

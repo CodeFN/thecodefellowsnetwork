@@ -12,7 +12,7 @@ def image_path(instance, file_name):
 class Post(models.Model):
     """User generated post model."""
 
-    author = models.OneToOneField(
+    author = models.ForeignKey(
         User,
         related_name='posts',
         on_delete=models.CASCADE,
@@ -22,7 +22,7 @@ class Post(models.Model):
     content = models.TextField(max_length=15000)
     content_rendered = models.TextField(max_length=75000)
     url = models.CharField(max_length=500, null=True)
-    image = models.ImageField(upload_to='image_path')
+    image = models.ImageField(upload_to='image_path', null=True, blank=True)
     date_uploaded = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
