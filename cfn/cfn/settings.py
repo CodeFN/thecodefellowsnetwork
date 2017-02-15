@@ -24,13 +24,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', False)
+# DEBUG = os.environ.get('DEBUG', False)
+DEBUG=False
 
 ALLOWED_HOSTS = [
     'ec2-52-35-131-204.us-west-2.compute.amazonaws.com',
     'cfndb.cqr4jdmedf2a.us-west-2.rds.amazonaws.com',
     '52.35.131.204',
     '127.0.0.1',
+    'localhost',
     'localhost:8000',
     'http://127.0.0.1:8000/',
 ]
@@ -139,7 +141,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'cfn', 'static')
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'MEDIA')
 MEDIA_URL = "/MEDIA/"
