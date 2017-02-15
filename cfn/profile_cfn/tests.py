@@ -64,7 +64,7 @@ class FrontendTests(TestCase):
         """Set up for frontend fest runner."""
         self.client = Client()
         self.request = RequestFactory()
-        self.photo = SimpleUploadedFile('test.jpg', open('cfn/static/cf_logo.png', 'rb').read())
+        self.photo = SimpleUploadedFile('test.jpg', open('cfn/static/images/cf_logo.png', 'rb').read())
 
     def add_user(self, username='test_user'):
         """Make a user and return his profile."""

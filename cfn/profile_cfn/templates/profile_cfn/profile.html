@@ -22,7 +22,7 @@
         {% if profile.profile_picture %}
             <img src="{{ profile.profile_picture.url }}" height = 100, width= 100/>
         {% else %}
-            <img src="{% static 'cf_logo.png' %}"height = 100, width= 100/>
+            <img src="{% static 'images/cf_logo.png' %}"height = 100, width= 100/>
         {% endif %}
         <p>About: {{ profile.about }}</p>
     </div>
@@ -36,7 +36,7 @@
             {% if fellow.profile.profile_picture %}
                 <img src="{{ fellow.profile.profile_picture.url }}" class="img-responsive" style="width:100%" alt="Image"height = 100, width= 100>
             {% else %}
-                <img src="{% static 'cf_logo.png' %}"height = 100, width= 100/>
+                <img src="{% static 'images/cf_logo.png' %}"height = 100, width= 100/>
             {% endif %}
         <p>{{ fellow.username }}</p>
         </div></a>
@@ -52,7 +52,7 @@
         {% if fellow.profile_picture %}
             <img src="{{ fellow.profile_picture.url }}" class="img-responsive" style="width:100%" alt="Image"height = 100, width= 100>
         {% else %}
-            <img src="{% static 'cf_logo.png' %}"height = 100, width= 100/>
+            <img src="{% static 'images/cf_logo.png' %}"height = 100, width= 100/>
         {% endif %}
       <p>{{ fellow.user.username }}</p>
     </div></a>
