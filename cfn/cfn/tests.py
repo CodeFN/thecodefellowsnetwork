@@ -35,22 +35,26 @@ class HomeViewTests(TestCase):
         user.save()
         return user
 
+    # Marc Mon
     def test_home_route_is_status_ok(self):
         """Funcional test."""
         response = self.client.get("/")
         self.assertTrue(response.status_code == 200)
 
+    # Marc Mon
     def test_home_route_uses_correct_template(self):
         """Test that the home view renders the home.html template."""
         response = self.client.get("/")
         self.assertTemplateUsed(response, "base.html")
         self.assertTemplateUsed(response, "cfn/home.html")
 
+    # Marc Mon
     def test_non_user_cannot_see_logged_in(self):
         """A non user should only see the Log in and registration."""
         response = self.client.get('/')
         self.assertContains(response, 'Log in or sign up with Github!')
 
+    # Marc Mon
     def test_user_can_see_logged_in_home_page(self):
         """A logged in user sees the logged in home page."""
         test_user = self.add_user()

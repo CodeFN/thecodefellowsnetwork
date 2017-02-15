@@ -12,7 +12,7 @@ class ProfileCfn(models.Model):
         related_name='profile',
         on_delete=models.CASCADE,
     )
-    profile_picture = models.ImageField(upload_to='profile_picture')
+    profile_picture = models.ImageField(upload_to='')
     about = models.TextField(max_length=1028, blank=True)
     follows = models.ManyToManyField(User, related_name='followed_by')
 
