@@ -16,7 +16,7 @@
 </h4>
 <h4>Post Created: {{ post.date_uploaded }}</h4>
 <h4>Last Modified: {{ post.date_modified }}</h4>
-<h4>External Link: <a href="{{ post.url }}">{{ post.url }}</h4>
+<h4>External Link: <a href="{{ post.url }}" target="_blank">{{ post.url }}</h4>
 {% if post.image %}
 <img src="{{ post.image.url }}">
 {% endif %}
