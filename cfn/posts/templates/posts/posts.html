@@ -13,7 +13,7 @@
       <th>Title</th>
       <th>Category</th>
       <th>Author</th>
-      <th>Date/Time</th>
+      <th>Posted</th>
       <th>Content</th>
     </tr>
   </thead>
@@ -38,7 +38,7 @@
         </a>
       </td>
       <td>
-        {{ post.date_uploaded }}
+        {{ post.date_uploaded|timesince }} ago
       </td>
       <td>
         {% if post.content|length > 20 %}
