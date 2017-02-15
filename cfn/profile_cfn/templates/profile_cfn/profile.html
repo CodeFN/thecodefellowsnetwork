@@ -32,7 +32,7 @@
     <div class="row">
     <h3>Following:</h3>
     {% for fellow in follows %}
-        <a href="{% url 'profile_other' fellow.username %}"><div class="col-sm-2">
+        <a href="{% url 'profile_other' fellow.username %}"><div class="col-sm-2 following_list">
             {% if fellow.profile.profile_picture %}
                 <img src="{{ fellow.profile.profile_picture.url }}" class="img-responsive" style="width:100%" alt="Image"height = 100, width= 100>
             {% else %}
@@ -48,7 +48,7 @@
     <div class="row">
     <h3>Followed By:</h3>
     {% for fellow in followed_by %}
-         <a href="{% url 'profile_other' fellow.user.username %}"><div class="col-sm-2">
+         <a href="{% url 'profile_other' fellow.user.username %}"><div class="col-sm-2 followed_by_list">
         {% if fellow.profile_picture %}
             <img src="{{ fellow.profile_picture.url }}" class="img-responsive" style="width:100%" alt="Image"height = 100, width= 100>
         {% else %}

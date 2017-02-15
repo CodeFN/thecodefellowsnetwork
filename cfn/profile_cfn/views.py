@@ -28,13 +28,6 @@ class ProfileView(LoginRequiredMixin, TemplateView):
                 'follows': follows,
                 'followed_by': followed_by,
             }
-        else:
-            error_message = "You must sign in to do that!"
-            return {'error': error_message}
-
-    def __str__(self):
-        """String representation of a user profile."""
-        return self.user
 
 
 class ProfileViewOther(LoginRequiredMixin, DetailView):
@@ -83,10 +76,11 @@ class EditProfileView(UpdateView):
         return self.request.user.profile
 
     def form_valid(self, form):
-        """If form post is successful, set the object's owner."""
+        """If form post is successful."""
         self.object = form.save()
         self.object.user.first_name = form.cleaned_data['First Name']
         self.object.user.last_name = form.cleaned_data['Last Name']
+        self.object.user.profile.about = form.cleaned_data['about']
         self.object.user.profile.profile_picture = form.cleaned_data['profile_picture']
         self.object.user.profile.save()
         self.object.user.save()
