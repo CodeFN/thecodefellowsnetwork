@@ -5,7 +5,15 @@
 {% block body %}
 <h2>"{{ post.title }}"</h2>
 <h4>Category: {{ post.category }}</h4>
-<h4>Author: {{ post.author.username }}</h4>
+<h4>Author:
+  {% if post.author.username != user.username %}
+  <a href="{% url 'profile_other' post.author.username %}">
+  {% elif post.author.username == user.username %}
+  <a href="{% url 'profile_self' %}">
+  {% endif %}
+    {{ post.author.username }}
+  </a>
+</h4>
 <h4>Post Created: {{ post.date_uploaded }}</h4>
 <h4>Last Modified: {{ post.date_modified }}</h4>
 {% if post.image %}

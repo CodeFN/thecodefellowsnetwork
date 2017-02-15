@@ -29,7 +29,13 @@
         {{ post.category }}
       </td>
       <td>
-        {{ post.author.username }}
+        {% if post.author.username != user.username %}
+        <a href="{% url 'profile_other' post.author.username %}">
+        {% elif post.author.username == user.username %}
+        <a href="{% url 'profile_self' %}">
+        {% endif %}
+          {{ post.author.username }}
+        </a>
       </td>
       <td>
         {{ post.date_uploaded }}
