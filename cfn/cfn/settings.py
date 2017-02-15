@@ -21,14 +21,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 't8pv7b%tes%2iq5*$pu^k*$$i)0ut(i(zrn-lnd5of0l&c6^^y'
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', False)
 
 ALLOWED_HOSTS = [
     'ec2-52-35-131-204.us-west-2.compute.amazonaws.com',
+    'cfndb.cqr4jdmedf2a.us-west-2.rds.amazonaws.com',
     '52.35.131.204',
-    'localhost',
+    '127.0.0.1',
+    'localhost:8000',
+    'http://127.0.0.1:8000/',
 ]
 
 # Application definition
