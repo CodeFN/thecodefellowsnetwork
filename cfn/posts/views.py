@@ -2,6 +2,8 @@
 
 # from django.shortcuts import render
 from django.views.generic import ListView
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 
 from posts.models import Post
 
@@ -35,10 +37,18 @@ class PostView(ListView):
     pass
 
 
-class NewPostView(ListView):
+class NewPostView(CreateView):
     """."""
 
-    pass
+    template_name = "posts/add_post.html"
+    model = Post
+    fields = ['title', 'category', 'content', 'url', 'image']
+    success_url = reverse_lazy('posts')
+
+    def form_valid(self, form):
+        """."""
+        form.instance.user = self.request.user
+        return super(NewPostView, self).form_valid(form)
 
 
 class EditPostView(ListView):
