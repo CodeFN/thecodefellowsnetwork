@@ -25,7 +25,6 @@ class Post(models.Model):
     )
     category = models.CharField(max_length=75, choices=CHOICE_CATEGORY)
     content = models.TextField(max_length=15000)
-    content_rendered = models.TextField(max_length=75000)
     url = models.URLField(max_length=200, null=True, blank=True)
     image = models.ImageField(upload_to='image_path', null=True, blank=True)
     date_uploaded = models.DateTimeField(auto_now_add=True)
