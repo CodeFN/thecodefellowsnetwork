@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/CodeFN/thecodefellowsnetwork.svg?branch=master)](https://travis-ci.org/CodeFN/thecodefellowsnetwork) [![Coverage Status](https://coveralls.io/repos/github/CodeFN/thecodefellowsnetwork/badge.svg?branch=master)](https://coveralls.io/github/CodeFN/thecodefellowsnetwork?branch=master)
+[![Build Status](https://travis-ci.org/CodeFN/thecodefellowsnetwork.svg?branch=post)](https://travis-ci.org/CodeFN/thecodefellowsnetwork) [![Coverage Status](https://coveralls.io/repos/github/CodeFN/thecodefellowsnetwork/badge.svg?branch=post)](https://coveralls.io/github/CodeFN/thecodefellowsnetwork?branch=post)
 
 
 # The Code Fellows Network

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block body %}
+<h2>"{{ post.title }}"</h2>
+<h4>Category: {{ post.category }}</h4>
+<h4>Author:
+  {% if post.author.username != user.username %}
+  <a href="{% url 'profile_other' post.author.username %}">
+  {% elif post.author.username == user.username %}
+  <a href="{% url 'profile_self' %}">
+  {% endif %}
+    {{ post.author.username }}
+  </a>
+</h4>
+<h4>Post Created: {{ post.date_uploaded }}</h4>
+<h4>Last Modified: {{ post.date_modified }}</h4>
+<h4>External Link: <a href="{{ post.url }}" target="_blank">{{ post.url }}</h4>
+{% if post.image %}
+<img src="{{ post.image.url }}">
+{% endif %}
+<p>{{ post.content }}</p>
+
+{% if post.author.username == user.username %}
+<p>
+  <a href="{% url 'edit_post' pk=post.id %}">
+    Edit this post
+  </a>
+</p>
+<p>
+  <a href="{% url 'delete_post' pk=post.id %}">
+    Delete this post
+  </a>
+</p>
+{% endif %}
+
+{% endblock %}
