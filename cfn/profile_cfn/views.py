@@ -1,68 +1,89 @@
-from django.views.generic import TemplateView, DetailView, UpdateView
+from django.views.generic import UpdateView
 from profile_cfn.models import ProfileCfn
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from profile_cfn.forms import EditProfileForm
 from django.urls import reverse_lazy
-
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ProfileView(LoginRequiredMixin, TemplateView):
-    """Class based view for logged in user's profile."""
+@login_required
+def ProfileView(request):
+    """Profile view for loggin in user."""
+    if request.user.is_authenticated():
+        profile = get_object_or_404(ProfileCfn.objects, user__username=request.user.username)
+        all_follows = profile.follows.all()
+        all_followed_by = profile.user.followed_by.all()
+        follows_page = request.GET.get("follows_page", 1)
+        followed_page = request.GET.get("followed_page", 1)
 
-    login_url = '/'
-    redirect_field_name = 'redirect_to'
-    template_name = 'profile_cfn/profile.html'
-    model = ProfileCfn
+        follows_pages = Paginator(all_follows, 12)
+        followed_pages = Paginator(all_followed_by, 12)
 
-    def get_context_data(self, username=None):
-        """Get profile information."""
-        if self.request.user.is_authenticated():
-            profile = self.request.user.profile
-            follows = profile.follows.all()
-            followed_by = self.request.user.followed_by.all()
-            return {
-                'profile': profile,
-                'follows': follows,
-                'followed_by': followed_by,
-            }
+        try:
+            follows = follows_pages.page(follows_page)
+            followed_by = followed_pages.page(followed_page)
+        except PageNotAnInteger:
+            follows = follows_pages.page(1)
+            followed_by = followed_pages.page(1)
+        except EmptyPage:
+            follows = follows_pages.page(follows_pages.num_pages)
+            followed_by = followed_pages.page(followed_pages.num_pages)
 
-
-class ProfileViewOther(LoginRequiredMixin, DetailView):
-    """"Profile view of other users."""
-
-    login_url = '/'
-    redirect_field_name = 'redirect_to'
-    template_name = 'profile_cfn/profile.html'
-    model = ProfileCfn
-    slug_field = 'user__username'
-
-    def get_context_data(self, **kwargs):
-        """Get profile information and return it."""
-        context = super(ProfileViewOther, self).get_context_data(**kwargs)
-        profile = ProfileCfn.objects.get(user__username=self.kwargs['slug'])
-        follows = profile.follows.all()
-        followed_by = profile.user.followed_by.all()
-        user_follows = self.request.user.profile.follows.all()
-        context['profile'] = profile
-        context['follows'] = follows
-        context['followed_by'] = followed_by
-        context['user_follows'] = user_follows
-        return context
-
-    def post(self, request, *args, **kwargs):
-        to_follow = User.objects.get(username=kwargs['slug'])
-        followed_list = self.request.user.profile.follows.all()
-        if to_follow in followed_list:
-            self.request.user.profile.follows.remove(to_follow)
-        else:
-            self.request.user.profile.follows.add(to_follow)
-        return HttpResponseRedirect("/profile/" + kwargs['slug'])
+        return render(request, "profile_cfn/profile.html", {
+            'profile': profile,
+            'follows': follows,
+            'followed_by': followed_by,
+        })
+    else:
+        return HttpResponseRedirect('')
 
 
-class EditProfileView(UpdateView):
+@login_required
+def ProfileViewOther(request, slug):
+    """Profile view for other user."""
+    if request.user.is_authenticated():
+        user_follows = request.user.profile.follows.all()
+        profile = get_object_or_404(ProfileCfn.objects, user__username=slug)
+        all_follows = profile.follows.all()
+        all_followed_by = profile.user.followed_by.all()
+        follows_page = request.GET.get("follows_page", 1)
+        followed_page = request.GET.get("followed_page", 1)
+
+        follows_pages = Paginator(all_follows, 12)
+        followed_pages = Paginator(all_followed_by, 12)
+
+        try:
+            follows = follows_pages.page(follows_page)
+            followed_by = followed_pages.page(followed_page)
+        except PageNotAnInteger:
+            follows = follows_pages.page(1)
+            followed_by = followed_pages.page(1)
+        except EmptyPage:
+            follows = follows_pages.page(follows_pages.num_pages)
+            followed_by = followed_pages.page(followed_pages.num_pages)
+        if request.method == 'POST':
+            to_follow = User.objects.get(username=slug)
+            if to_follow in user_follows:
+                request.user.profile.follows.remove(to_follow)
+            else:
+                request.user.profile.follows.add(to_follow)
+            return HttpResponseRedirect("/profile/" + slug)
+
+        return render(request, "profile_cfn/profile.html", {
+            'profile': profile,
+            'follows': follows,
+            'followed_by': followed_by,
+            'user_follows': user_follows,
+        })
+    else:
+        return HttpResponseRedirect('')
+
+
+class EditProfileView(LoginRequiredMixin, UpdateView):
     """Update profile."""
 
     login_required = True
@@ -81,7 +102,6 @@ class EditProfileView(UpdateView):
         self.object.user.first_name = form.cleaned_data['First Name']
         self.object.user.last_name = form.cleaned_data['Last Name']
         self.object.user.profile.about = form.cleaned_data['about']
-        self.object.user.profile.profile_picture = form.cleaned_data['profile_picture']
         self.object.user.profile.save()
         self.object.user.save()
         self.object.save()
