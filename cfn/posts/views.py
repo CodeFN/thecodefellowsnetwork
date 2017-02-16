@@ -2,11 +2,11 @@
 
 from django.http import Http404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DeleteView
+from django.views.generic import ListView, DeleteView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 
 from posts.models import Post
-from posts.forms import AddPostForm, EditPostForm
+from posts.forms import AddPostForm, EditPostForm, CommentForm
 
 
 class PostsView(ListView):
@@ -24,16 +24,23 @@ class PostsView(ListView):
         return {}
 
 
-class PostView(ListView):
+class PostView(DetailView):
     """."""
 
     template_name = 'posts/post.html'
     model = Post
+    form = CommentForm
 
-    def get_context_data(self):
+    def get_object(self, queryset=None):
+        """Get the post to delete."""
+        post = Post.objects.get(id=self.kwargs['pk'])
+        return post
+
+    def get_context_data(self, **kwargs):
         """."""
-        self.post = Post.objects.get(id=self.kwargs['pk'])
-        return {'post': self.post}
+        context = super(PostView, self).get_context_data(**kwargs)
+        context['form'] = CommentForm
+        return context
 
 
 class NewPostView(CreateView):

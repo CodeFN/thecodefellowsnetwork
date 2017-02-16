@@ -48,7 +48,8 @@ class Comment(models.Model):
         related_name='comments',
         on_delete=models.CASCADE,
     )
-    content = models.CharField(max_length=1028)
+    comment = models.CharField(max_length=1028)
+    datetime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         """String Representation of comment."""

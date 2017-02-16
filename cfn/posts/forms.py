@@ -2,7 +2,7 @@
 
 from django import forms
 
-from posts.models import Post
+from posts.models import Post, Comment
 
 
 class AddPostForm(forms.ModelForm):
@@ -32,4 +32,18 @@ class EditPostForm(forms.ModelForm):
             'date_modified',
             'author',
             'content_rendered',
+        ]
+
+
+class CommentForm(forms.ModelForm):
+    """Form to post a comment."""
+
+    class Meta:
+        """Define model and stuff."""
+
+        model = Comment
+        exclude = [
+            'by_user',
+            'on_post',
+            'datetime',
         ]
