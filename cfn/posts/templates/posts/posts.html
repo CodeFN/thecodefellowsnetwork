@@ -3,59 +3,63 @@
 {% block title %}Posts{% endblock %}
 
 {% block body %}
-<h2>Posts</h2>
+<div class="container">
+  <h2>Posts</h2>
 
-<a href="{% url 'new_post' %}">Make a new post</a>
+  <a class="btn btn-large btn-danger" href="{% url 'new_post' %}">
+    Make a new post
+  </a>
+  <p></p>
 
-<table class="table table-hover table-responsive">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Category</th>
-      <th>Author</th>
-      <th>Posted</th>
-      <th>Content</th>
-      <th>Comments</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for post in posts %}
-    <tr>
-      <td>
-        <a href="{% url 'post' pk=post.id %}">
-          {{ post.title }}
-        </a>
-      </td>
-      <td>
-        {{ post.category }}
-      </td>
-      <td>
-        {% if post.author.username != user.username %}
-        <a href="{% url 'profile_other' post.author.username %}">
-        {% elif post.author.username == user.username %}
-        <a href="{% url 'profile_self' %}">
-        {% endif %}
-          {{ post.author.username }}
-        </a>
-      </td>
-      <td>
-        {{ post.date_uploaded|timesince }} ago
-      </td>
-      <td>
-        <a href="{% url 'post' pk=post.id %}">
-          {% if post.content|length > 40 %}
-            {{ post.content|slice:":40" }}...
-          {% else %}
-            {{ post.content }}
+  <table class="table table-hover table-responsive">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Author</th>
+        <th>Posted</th>
+        <th>Content</th>
+        <th>Comments</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+      <tr>
+        <td>
+          <a href="{% url 'post' pk=post.id %}">
+            {{ post.title }}
+          </a>
+        </td>
+        <td>
+          {{ post.category }}
+        </td>
+        <td>
+          {% if post.author.username != user.username %}
+          <a href="{% url 'profile_other' post.author.username %}">
+          {% elif post.author.username == user.username %}
+          <a href="{% url 'profile_self' %}">
           {% endif %}
-        </a>
-      </td>
-      <td>
-        {{ post.comments.all|length }}
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
+            {{ post.author.username }}
+          </a>
+        </td>
+        <td>
+          {{ post.date_uploaded|timesince }} ago
+        </td>
+        <td>
+          <a href="{% url 'post' pk=post.id %}">
+            {% if post.content|length > 40 %}
+              {{ post.content|slice:":40" }}...
+            {% else %}
+              {{ post.content }}
+            {% endif %}
+          </a>
+        </td>
+        <td>
+          {{ post.comments.all|length }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}
