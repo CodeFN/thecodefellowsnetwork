@@ -45,7 +45,6 @@ def make_user_profile(sender, instance, **kwargs):
             client_id = os.environ.get('GITHUB_APP_ID', '')
             client_secret = os.environ.get('GITHUB_API_SECRET', '')
             github_api_string = 'https://api.github.com/users/' + str(profile) + '?client_id=' + client_id + '&client_secret=' + client_secret
-            import pdb; pdb.set_trace()
             req = requests.get(github_api_string)
             content = req.content.decode('utf-8')
             json_list.append(json.loads(content))

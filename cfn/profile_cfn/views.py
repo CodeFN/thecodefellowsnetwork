@@ -71,7 +71,6 @@ def ProfileViewOther(request, slug):
             else:
                 request.user.profile.follows.add(to_follow)
             return HttpResponseRedirect("/profile/" + slug)
-        import pdb; pdb.set_trace()
         return render(request, "profile_cfn/profile.html", {
             'profile': profile,
             'follows': follows,
