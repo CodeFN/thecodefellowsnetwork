@@ -5,10 +5,26 @@
 {% block css %}<link href="{% static 'style.css' %}" rel="stylesheet">{% endblock %}
 
 {% block body %}
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <h2>Edit your profile.</h2>
-    {{ form.as_p }}
-    <button type="submit">Update</button>
-  </form>
+  <div class="container">
+    <h2>Edit your profile</h2>
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        {% csrf_token %}
+        {% for field in form %}
+        <fieldset class="control-group">
+          <label class="control-label" for="id_{{ field.name }}">
+            {{ field.label }}
+          </label>
+          <div class="controls">
+            {{ field }}
+            <p class="help-text">
+              {{ field.help_text }}
+            </p>
+          </div>
+        </fieldset>
+        {% endfor %}
+        <input type="submit" value="Update" class="btn btn-primary" />
+      </div>
+    </form>
+  </div>
 {% endblock %}
