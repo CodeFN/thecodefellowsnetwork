@@ -32,7 +32,6 @@ def ProfileView(request):
         except EmptyPage:
             follows = follows_pages.page(follows_pages.num_pages)
             followed_by = followed_pages.page(followed_pages.num_pages)
-
         return render(request, "profile_cfn/profile.html", {
             'profile': profile,
             'follows': follows,

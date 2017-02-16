@@ -33,7 +33,7 @@ class Post(models.Model):
     def __str__(self):
         """String Representation of post."""
         return str(self.title)
-
+    
 
 class Comment(models.Model):
     """Comment class."""

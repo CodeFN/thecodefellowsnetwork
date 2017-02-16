@@ -34,6 +34,26 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
   
 }
 
+#post_section{
+    color:white;
+}
+.post_section{
+    background-color: black;
+    border-radius: 10px;
+    padding-bottom: 1%;
+}
+
+.post_list{
+    border: 1px solid black;
+    border-radius: 10px;
+    padding-bottom: 2%;
+    background-color: white;
+}
+.post_row{
+    margin-top: 1%;
+
+}
+
 .followed_by_list, .following_list{
     border: 1px solid white;
     padding: 1%;

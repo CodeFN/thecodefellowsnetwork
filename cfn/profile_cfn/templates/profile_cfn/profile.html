@@ -47,6 +47,32 @@
      </div>
     <hr>
 
+
+<div class="container text-center post_section"> 
+ {% if profile.user.posts %}  
+    <h3 id='post_section'>Posts:</h3>
+    <div class="row ">
+    {% for post in profile.user.posts.all|dictsortreversed:"date_modified"%}
+        <div class="row post_row">
+         <div class="col-sm-2"></div>
+            <div class="col-sm-8 post_list">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.category }} uploaded {{ post.date_modified }}</p>
+                <p>{{ post.content }}</p>
+                <a href="{{ post.url }}"target="_blank">{{ post.url }}</a>
+    
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endif %}
+</div><hr>
+
+
+
+
+
 <div class="container text-center profile_container"> 
  {% if follows %}  
     <h3 id='following_section'>Following:</h3>
