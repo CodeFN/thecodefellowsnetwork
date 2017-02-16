@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<ul>
+<div class="container text-center profile_container"> 
+    <h3 id='following_section'>Fellows:</h3>
+        <div class="row following_row">
+    {% for fellow in fellows %}
+        {% if fellow.username != request.user.username %}
+        <a href="{% url 'profile_other' fellow.username %}"><div class="col-sm-2 following_list">
+                {% if fellow.profile.avatar_url %}
+                    <img src="{{ fellow.profile.avatar_url }}" alt="Image"height = 100, width= 100>
+                {% else %}
+                    <img src="{% static 'images/cf_logo.png' %}"height = 100, width= 100/>
+                {% endif %}
+            <p>{{ fellow.username }}</p>
+            </div></a>
+        {% endif %}
+    {% endfor %}
+    </ul>
+    </div>
+</div>
+
+<nav>
+    <ul>
+    {% for page_num in paginator.page_range %}
+        <li><a href="?page={{ page_num }}">Page {{ page_num }}</a></li>
+    {% endfor %}
+    </ul>
+</nav>
+
+{% endblock %}

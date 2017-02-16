@@ -1,6 +1,5 @@
-* {
-    color: white;
-/*     outline: 1px solid red; */
+body{
+    background-color: white;
 }
 
 .homebox{
@@ -21,4 +20,58 @@
 
 .homebox_header h3{
     color: black;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
+    color: black;
+}
+
+.followed_by_row, .following_row{
+    border-left: 1px solid black;
+    border-radius: 10px;
+    margin-bottom: 1%;
+    background-color: black;
+    padding: 1%;
+  
+}
+
+#post_section{
+    color:white;
+}
+.post_section{
+    background-color: black;
+    border-radius: 10px;
+    padding-bottom: 1%;
+}
+
+.post_list{
+    border: 1px solid black;
+    border-radius: 10px;
+    padding-bottom: 2%;
+    background-color: white;
+}
+.post_row{
+    margin-top: 1%;
+
+}
+
+.followed_by_list, .following_list{
+    border: 1px solid white;
+    padding: 1%;
+}
+
+
+.profile_info{
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 0 5% 2% 5%;
+    margin-top: 2%
+}
+
+.profile_quick_jumps{
+    padding-top: 2%;
+}
+
+.footer{
+    background-color: black;
+    height: 100px;
 }

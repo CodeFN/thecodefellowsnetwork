@@ -206,7 +206,7 @@ class FrontendTests(TestCase):
         self.client.post('/profile/test_user/')
         self.log_in_test_user()
         response = self.client.get("/profile/")
-        soup = Soup(response.rendered_content, 'html.parser')
+        soup = Soup(response.content, 'html.parser')
         following_divs = soup.findAll("div", {"class": "followed_by_list"})
         self.assertTrue(len(following_divs) == 3)
 
@@ -222,7 +222,7 @@ class FrontendTests(TestCase):
         self.client.post('/profile/test_user3/')
         self.client.post('/profile/test_user4/')
         response = self.client.get("/profile/")
-        soup = Soup(response.rendered_content, 'html.parser')
+        soup = Soup(response.content, 'html.parser')
         following_divs = soup.findAll("div", {"class": "following_list"})
         self.assertTrue(len(following_divs) == 3)
 

@@ -17,50 +17,119 @@
     {% else %}
         <a href="{% url 'edit_profile' %}"><button>Update Profile</button></a>
     {% endif %}
-    <div class="container">
+    <div class="container profile_info">
+     <div class="row">
         <h1>{{ profile.user.username }}'s profile</h1>
-        {% if profile.profile_picture %}
-            <img src="{{ profile.profile_picture.url }}" height = 100, width= 100/>
-        {% else %}
-            <img src="{% static 'images/cf_logo.png' %}"height = 100, width= 100/>
-        {% endif %}
+        <div class="col-sm-2">
+            {% if profile.avatar_url %}
+                <img src="{{ profile.avatar_url }}" height = 100, width= 100/>
+            {% else %}
+                <img src="{% static 'images/cf_logo.png' %}"height = 100, width= 100/>
+            {% endif %}
+        </div>
+        <div class="col-sm-8">
+        <p>{{ profile.user.first_name }} {{ profile.user.last_name}}</p>
         <p>About: {{ profile.about }}</p>
+        </div>
+     </div>
+    </div>
+     <div class="row profile_quick_jumps">
+     <div class="col-sm-3"></div>
+        <div class="col-sm-2">
+            <a href="#">POSTS</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="#following_section">FOLLOWING</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="#followed_by_section">FOLLOWED BY</a>
+        </div>
+     </div>
+    <hr>
+
+
+<div class="container text-center post_section"> 
+ {% if profile.user.posts %}  
+    <h3 id='post_section'>Posts:</h3>
+    <div class="row ">
+    {% for post in profile.user.posts.all|dictsortreversed:"date_modified"%}
+        <div class="row post_row">
+         <div class="col-sm-2"></div>
+            <div class="col-sm-8 post_list">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.category }} uploaded {{ post.date_modified }}</p>
+                <p>{{ post.content }}</p>
+                <a href="{{ post.url }}"target="_blank">{{ post.url }}</a>
+    
+            </div>
+        </div>
+    {% endfor %}
     </div>
 
-<div class="container text-center"> 
+{% endif %}
+</div><hr>
+
+
+
+
+
+<div class="container text-center profile_container"> 
  {% if follows %}  
-    <div class="row">
-    <h3>Following:</h3>
+    <h3 id='following_section'>Following:</h3>
+    <div class="row following_row">
     {% for fellow in follows %}
         <a href="{% url 'profile_other' fellow.username %}"><div class="col-sm-2 following_list">
-            {% if fellow.profile.profile_picture %}
-                <img src="{{ fellow.profile.profile_picture.url }}" class="img-responsive" style="width:100%" alt="Image"height = 100, width= 100>
+            {% if fellow.profile.avatar_url %}
+                <img src="{{ fellow.profile.avatar_url }}" alt="Image"height = 100, width= 100>
             {% else %}
                 <img src="{% static 'images/cf_logo.png' %}"height = 100, width= 100/>
             {% endif %}
         <p>{{ fellow.username }}</p>
         </div></a>
     {% endfor %}
-    {% endif %}
-    </div>
-
-     {% if followed_by %}
     <div class="row">
-    <h3>Followed By:</h3>
-    {% for fellow in followed_by %}
-         <a href="{% url 'profile_other' fellow.user.username %}"><div class="col-sm-2 followed_by_list">
-        {% if fellow.profile_picture %}
-            <img src="{{ fellow.profile_picture.url }}" class="img-responsive" style="width:100%" alt="Image"height = 100, width= 100>
-        {% else %}
-            <img src="{% static 'images/cf_logo.png' %}"height = 100, width= 100/>
-        {% endif %}
-      <p>{{ fellow.user.username }}</p>
-    </div></a>
-        
-    {% endfor %}
-    {% endif %}
+        <nav class='page-nav'>
+            <ul>
+                {% if follows.has_previous %}
+                <li><a href="?followed_page={{ followed_by.number }}&follows_page={{ follows.previous_page_number }}#following_section">Previous</a></li>
+                {% endif %}
+                {% if follows.has_next %}
+                <li><a href="?followed_page={{ followed_by.number }}&follows_page={{ follows.next_page_number }}#following_section">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
-    </div><br>
+    {% endif %}
+    </div><hr>
+
+    {% if followed_by %}
+    <h3 id='followed_by_section'>Followed By:</h3>
+    <div class="row followed_by_row">
+        {% for fellow in followed_by %}
+            <a href="{% url 'profile_other' fellow.user.username %}"><div class="col-sm-2 followed_by_list">
+                {% if fellow.avatar_url %}
+                    <img src="{{ fellow.avatar_url }}" alt="Image"height = 100, width= 100>
+                {% else %}
+                    <img src="{% static 'images/cf_logo.png' %}"height = 100, width= 100/>
+                {% endif %}
+            <p>{{ fellow.user.username }}</p>
+            </div></a>
+        {% endfor %}
+        <div class="row">
+        <nav class='page-nav'>
+            <ul>
+                {% if followed_by.has_previous %}
+                <li><a href="?followed_page={{ followed_by.previous_page_number }}&follows_page={{ follows.number }}#followed_by_section">Previous</a></li>
+                {% endif %}
+                {% if followed_by.has_next %}
+                <li><a href="?followed_page={{ followed_by.next_page_number }}&follows_page={{ follows.number }}#followed_by_section">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    </div>
+    {% endif %}
+</div><br>
 
 </ul>
 {% endblock %} 

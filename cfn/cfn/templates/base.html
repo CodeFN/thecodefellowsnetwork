@@ -26,7 +26,9 @@
             <li class="active"><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'profile_self' %}">Profile</a></li>
             <li><a href="{% url 'logout' %}">Logout</a></li>
+            <li><a href="{% url 'find_users' %}">Find Users</a></li>
             <li><a href="{% url 'posts' %}">Posts</a></li>
+
           {% endif %}
         </ul>
       </div>
@@ -39,5 +41,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
     {% block scripts %}{% endblock %}
+    <footer class="container-fluid text-center footer">
+    <br><br>
+    <p>&copy Code Fellows Network 2017</p>
+</footer>
+
   </body>
 </html>
