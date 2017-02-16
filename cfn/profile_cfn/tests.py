@@ -1,5 +1,4 @@
 """ProfileCfn Tests."""
-
 from django.test import TestCase, Client, RequestFactory
 from django.contrib.auth.models import User
 from profile_cfn.models import ProfileCfn

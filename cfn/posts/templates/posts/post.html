@@ -3,60 +3,63 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block body %}
-<h2>"{{ post.title }}"</h2>
-<h4>Category: {{ post.category }}</h4>
-<h4>Author:
-  {% if post.author.username != user.username %}
-  <a href="{% url 'profile_other' post.author.username %}">
-  {% elif post.author.username == user.username %}
-  <a href="{% url 'profile_self' %}">
-  {% endif %}
-    {{ post.author.username }}
-  </a>
-</h4>
-<h4>Post Created: {{ post.date_uploaded }}</h4>
-<h4>Last Modified: {{ post.date_modified }}</h4>
-{% if post.url %}
-<h4>External Link: <a href="{{ post.url }}" target="_blank">{{ post.url }}</a></h4>
-{% endif %}
-{% if post.image %}
-<img src="{{ post.image.url }}">
-{% endif %}
-<p>{{ post.content }}</p>
-
-{% if post.author.username == user.username %}
-<p>
-  <a href="{% url 'edit_post' pk=post.id %}">
-    Edit this post
-  </a>
-</p>
-<p>
-  <a href="{% url 'delete_post' pk=post.id %}">
-    Delete this post
-  </a>
-</p>
-{% endif %}
-
-<h4>COMMENTS:</h4>
-{% if post.comments.all|length > 0 %}
-  {% for comment in post.comments.all %}
-  <p>"{{ comment.comment }}" - 
-  {% if comment.by_user.username != user.username %}
-    <a href="{% url 'profile_other' comment.by_user.username %}">
-    {% elif comment.by_user.username == user.username %}
+<div class="container">
+  <h2>"{{ post.title }}"</h2>
+  <h4>Category: {{ post.category }}</h4>
+  <h4>Author:
+    {% if post.author.username != user.username %}
+    <a href="{% url 'profile_other' post.author.username %}">
+    {% elif post.author.username == user.username %}
     <a href="{% url 'profile_self' %}">
     {% endif %}
-    {{ comment.by_user.username }}</a>
-    {{ comment.datetime|timesince }} ago
-  {% endfor %}
-{% else %}
-<p>Be the first to comment.</p>
-{% endif %}
+      {{ post.author.username }}
+    </a>
+  </h4>
+  <h4>Post Created: {{ post.date_uploaded }}</h4>
+  <h4>Last Modified: {{ post.date_modified }}</h4>
+  {% if post.url %}
+  <h4>External Link: <a href="{{ post.url }}" target="_blank">{{ post.url }}</a></h4>
+  {% endif %}
+  {% if post.image %}
+  <img src="{{ post.image.url }}" class="img-responsive">
+  {% endif %}
+  <p class="lead">{{ post.content }}</p>
 
-<form method="POST">
-{% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Submit">
-</form>
+  {% if post.author.username == user.username %}
+  <p>
+    <a href="{% url 'edit_post' pk=post.id %}">
+      Edit this post
+    </a>
+  </p>
+  <p>
+    <a href="{% url 'delete_post' pk=post.id %}">
+      Delete this post
+    </a>
+  </p>
+  {% endif %}
+
+  <h4>COMMENTS:</h4>
+  {% if post.comments.all|length > 0 %}
+    {% for comment in post.comments.all %}
+    <p>"{{ comment.comment }}" - 
+    {% if comment.by_user.username != user.username %}
+      <a href="{% url 'profile_other' comment.by_user.username %}">
+      {% elif comment.by_user.username == user.username %}
+      <a href="{% url 'profile_self' %}">
+      {% endif %}
+      {{ comment.by_user.username }}</a>
+      {{ comment.datetime|timesince }} ago
+    {% endfor %}
+  {% else %}
+  <p>Be the first to comment.</p>
+  {% endif %}
+
+  <form method="POST">
+  {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Post Comment" class="btn btn-danger">
+  </form>
+  <p></p>
+</div>
 
 {% endblock %}
