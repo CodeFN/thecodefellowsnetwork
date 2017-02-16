@@ -54,6 +54,7 @@ def make_user_profile(sender, instance, **kwargs):
 
 def github_api_call(profile_str):
     """Make api call to github to retrieve user data."""
+    print('api call')
     client_id = os.environ.get('GITHUB_APP_ID', '')
     client_secret = os.environ.get('GITHUB_API_SECRET', '')
     github_api_string = 'https://api.github.com/users/' + profile_str + '?client_id=' + client_id + '&client_secret=' + client_secret
