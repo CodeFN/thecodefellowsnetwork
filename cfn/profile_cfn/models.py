@@ -14,7 +14,7 @@ class ProfileCfn(models.Model):
         related_name='profile',
         on_delete=models.CASCADE,
     )
-    about = models.TextField(max_length=1028, blank=True)
+    about = models.TextField(max_length=1028, blank=True, null=True)
     follows = models.ManyToManyField(User, related_name='followed_by')
     avatar_url = models.URLField(max_length=256, null=True, blank=True)
 
@@ -33,12 +33,14 @@ def make_user_profile(sender, instance, **kwargs):
     """Create and save a profile when a user is created."""
     if kwargs["created"]:
         profile = ProfileCfn(user=instance)
-        json_list = []
-        req = requests.get('https://api.github.com/users/' + str(profile))
-        content = req.content.decode('utf-8')
-        json_list.append(json.loads(content))
-        if json_list[0]['avatar_url']:
-            profile.avatar_url = json_list[0]['avatar_url']
-        profile.about = json_list[0]['bio']
+        try:
+            json_list = []
+            req = requests.get('https://api.github.com/users/' + str(profile))
+            content = req.content.decode('utf-8')
+            json_list.append(json.loads(content))
+            if json_list[0]['avatar_url']:
+                profile.avatar_url = json_list[0]['avatar_url']
+            profile.about = json_list[0]['bio']
+        except:
+            pass
         profile.save()
-
