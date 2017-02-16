@@ -6,15 +6,15 @@ from django.conf import settings
 
 from posts.views import (
     PostsView,
-    PostView,
     NewPostView,
     EditPostView,
     DeletePostView,
+    PostWithCommentsView,
 )
 
 urlpatterns = [
     url(r'^$', PostsView.as_view(), name='posts'),
-    url(r'^(?P<pk>\d+)$', PostView.as_view(), name='post'),
+    url(r'^(?P<pk>\d+)$', PostWithCommentsView.as_view(), name='post'),
     url(r'^new/$', NewPostView.as_view(), name='new_post'),
     url(r'^(?P<pk>\d+)/edit$', EditPostView.as_view(), name='edit_post'),
     url(r'^(?P<pk>\d+)/delete$', DeletePostView.as_view(), name='delete_post'),

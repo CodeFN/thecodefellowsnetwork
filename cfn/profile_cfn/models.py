@@ -14,7 +14,7 @@ class ProfileCfn(models.Model):
         related_name='profile',
         on_delete=models.CASCADE,
     )
-    about = models.TextField(max_length=1028, blank=True)
+    about = models.TextField(max_length=1028, blank=True, null=True)
     follows = models.ManyToManyField(User, related_name='followed_by')
     avatar_url = models.URLField(max_length=256, null=True, blank=True)
 

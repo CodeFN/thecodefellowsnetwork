@@ -16,7 +16,9 @@
 </h4>
 <h4>Post Created: {{ post.date_uploaded }}</h4>
 <h4>Last Modified: {{ post.date_modified }}</h4>
-<h4>External Link: <a href="{{ post.url }}" target="_blank">{{ post.url }}</h4>
+{% if post.url %}
+<h4>External Link: <a href="{{ post.url }}" target="_blank">{{ post.url }}</a></h4>
+{% endif %}
 {% if post.image %}
 <img src="{{ post.image.url }}">
 {% endif %}
@@ -34,5 +36,27 @@
   </a>
 </p>
 {% endif %}
+
+<h4>COMMENTS:</h4>
+{% if post.comments.all|length > 0 %}
+  {% for comment in post.comments.all %}
+  <p>"{{ comment.comment }}" - 
+  {% if comment.by_user.username != user.username %}
+    <a href="{% url 'profile_other' comment.by_user.username %}">
+    {% elif comment.by_user.username == user.username %}
+    <a href="{% url 'profile_self' %}">
+    {% endif %}
+    {{ comment.by_user.username }}</a>
+    {{ comment.datetime|timesince }} ago
+  {% endfor %}
+{% else %}
+<p>Be the first to comment.</p>
+{% endif %}
+
+<form method="POST">
+{% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Submit">
+</form>
 
 {% endblock %}
