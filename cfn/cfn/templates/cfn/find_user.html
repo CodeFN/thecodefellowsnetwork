@@ -8,6 +8,7 @@
         <div class="row following_row">
     {% for fellow in fellows %}
         {% if fellow.username != request.user.username %}
+        {% if fellow.username != 'admin' %}
         <a href="{% url 'profile_other' fellow.username %}"><div class="col-sm-2 following_list">
                 {% if fellow.profile.avatar_url %}
                     <img src="{{ fellow.profile.avatar_url }}" alt="Image"height = 100, width= 100>
@@ -16,6 +17,7 @@
                 {% endif %}
             <p>{{ fellow.username }}</p>
             </div></a>
+        {% endif %}
         {% endif %}
     {% endfor %}
     </ul>

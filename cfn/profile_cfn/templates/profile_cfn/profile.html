@@ -30,6 +30,7 @@
         <div class="col-sm-8">
         <p>{{ profile.user.first_name }} {{ profile.user.last_name}}</p>
         <p>About: {{ profile.about }}</p>
+        <p>Github: <a href="{{ profile.github_url }}"target='blank'>{{ profile.github_url }}</a></p>
         </div>
      </div>
     </div>
@@ -48,8 +49,8 @@
     <hr>
 
 
+ {% if profile.user.posts.all|length > 0 %}  
 <div class="container text-center post_section"> 
- {% if profile.user.posts %}  
     <h3 id='post_section'>Posts:</h3>
     <div class="row ">
     {% for post in profile.user.posts.all|dictsortreversed:"date_modified"%}
@@ -66,8 +67,8 @@
     {% endfor %}
     </div>
 
-{% endif %}
 </div><hr>
+{% endif %}
 
 
 
