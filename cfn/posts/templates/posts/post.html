@@ -23,7 +23,7 @@
   {% if post.image %}
   <img src="{{ post.image.url }}" class="img-responsive">
   {% endif %}
-  <p>{{ post.content }}</p>
+  <p class="lead">{{ post.content }}</p>
 
   {% if post.author.username == user.username %}
   <p>
@@ -57,7 +57,7 @@
   <form method="POST">
   {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Submit">
+    <input type="submit" value="Post Comment" class="btn btn-danger">
   </form>
   <p></p>
 </div>

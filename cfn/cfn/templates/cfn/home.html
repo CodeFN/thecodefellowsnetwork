@@ -3,7 +3,9 @@
   <div class="container-fluid text-center">  
   {% if request.user.is_authenticated %} 
     <div class="col-sm-12 text-left"> 
-        <p>Logged in as: {{ request.user }}</p>
+        <p>Logged in as:
+          <a href="{% url 'profile_self' %}">{{ request.user }}</a>
+        </p>
     </div>
     <div class="row content">
     <div class="col-sm-2 sidenav"></div>
