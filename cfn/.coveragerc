@@ -2,6 +2,7 @@
 source =
     cfn
     profile_cfn
+    posts
 
 omit =
     */migrations/*

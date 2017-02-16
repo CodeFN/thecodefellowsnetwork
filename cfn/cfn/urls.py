@@ -1,4 +1,4 @@
-"""cfn URL Configuration
+"""cfn URL Configuration.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.10/topics/http/urls/
@@ -30,5 +30,8 @@ urlpatterns = [
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^profile/', include('profile_cfn.urls')),
     url(r'^find/users/', FindUserView.as_view(), name='find_users'),
+    url(r'^posts/', include('posts.urls')),
+
 ]
+
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
