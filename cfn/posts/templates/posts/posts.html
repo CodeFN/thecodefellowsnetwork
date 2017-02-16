@@ -15,6 +15,7 @@
       <th>Author</th>
       <th>Posted</th>
       <th>Content</th>
+      <th>Comments</th>
     </tr>
   </thead>
   <tbody>
@@ -48,6 +49,9 @@
             {{ post.content }}
           {% endif %}
         </a>
+      </td>
+      <td>
+        {{ post.comments|length }}
       </td>
     </tr>
     {% endfor %}

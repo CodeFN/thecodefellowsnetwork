@@ -16,7 +16,7 @@
 </h4>
 <h4>Post Created: {{ post.date_uploaded }}</h4>
 <h4>Last Modified: {{ post.date_modified }}</h4>
-<h4>External Link: <a href="{{ post.url }}" target="_blank">{{ post.url }}</h4>
+<h4>External Link: <a href="{{ post.url }}" target="_blank">{{ post.url }}</a></h4>
 {% if post.image %}
 <img src="{{ post.image.url }}">
 {% endif %}
@@ -35,8 +35,8 @@
 </p>
 {% endif %}
 
-{% if context.comments.data|length > 0 %}
-  {% for comment in context.comments.data %}
+{% if post.comments.all|length > 0 %}
+  {% for comment in post.comments.all %}
   <p>{{ comment.comment }}
   {% endfor %}
 {% else %}

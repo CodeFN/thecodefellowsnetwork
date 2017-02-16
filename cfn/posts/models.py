@@ -53,7 +53,7 @@ class Comment(models.Model):
 
     def __str__(self):
         """String Representation of comment."""
-        return str(self.content)
+        return str(self.comment)
 
 
 class Like(models.Model):

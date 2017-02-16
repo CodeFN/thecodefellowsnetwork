@@ -2,6 +2,7 @@
 
 from django import forms
 
+
 from posts.models import Post, Comment
 
 
@@ -16,7 +17,6 @@ class AddPostForm(forms.ModelForm):
             'date_uploaded',
             'date_modified',
             'author',
-            'content_rendered',
         ]
 
 
@@ -31,7 +31,6 @@ class EditPostForm(forms.ModelForm):
             'date_uploaded',
             'date_modified',
             'author',
-            'content_rendered',
         ]
 
 

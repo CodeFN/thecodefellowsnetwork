@@ -44,12 +44,19 @@ class PostView(DetailView):
         return context
 
 
-class CommentView(SingleObjectMixin, FormView):
+class NewCommentView(SingleObjectMixin, FormView):
     """Handle comment view."""
 
     template_name = 'posts/post.html'
     form_class = CommentForm
     model = Post
+
+    def form_valid(self, form):
+        """."""
+        form.instance.by_user = self.request.user
+        form.instance.on_post = self.object
+        form.save()
+        return super(NewCommentView, self).form_valid(form)
 
     def post(self, request, *args, **kwargs):
         """Post comment method."""
@@ -57,7 +64,7 @@ class CommentView(SingleObjectMixin, FormView):
             return HttpResponseForbidden()
         self.object = self.get_object()
         return super(
-            CommentView, self).post(request, *args, **kwargs)
+            NewCommentView, self).post(request, *args, **kwargs)
 
     def get_success_url(self):
         """Redirect after success."""
@@ -75,7 +82,7 @@ class PostWithCommentsView(View):
 
     def post(self, request, *args, **kwargs):
         """Post request."""
-        view = CommentView.as_view()
+        view = NewCommentView.as_view()
         return view(request, *args, **kwargs)
 
 
