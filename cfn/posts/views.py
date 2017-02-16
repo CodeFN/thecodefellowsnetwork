@@ -33,7 +33,7 @@ class PostView(DetailView):
     model = Post
 
     def get_object(self, queryset=None):
-        """Get the post to delete."""
+        """Get the post to view."""
         post = Post.objects.get(id=self.kwargs['pk'])
         return post
 
