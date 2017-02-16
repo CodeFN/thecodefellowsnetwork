@@ -1,12 +1,14 @@
 """Post views."""
 
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DeleteView
+from django.views import View
+from django.views.generic import ListView, DeleteView, DetailView, FormView
+from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import CreateView, UpdateView
 
 from posts.models import Post
-from posts.forms import AddPostForm, EditPostForm
+from posts.forms import AddPostForm, EditPostForm, CommentForm
 
 
 class PostsView(ListView):
@@ -24,16 +26,64 @@ class PostsView(ListView):
         return {}
 
 
-class PostView(ListView):
+class PostView(DetailView):
     """."""
 
     template_name = 'posts/post.html'
     model = Post
 
-    def get_context_data(self):
+    def get_object(self, queryset=None):
+        """Get the post to view."""
+        post = Post.objects.get(id=self.kwargs['pk'])
+        return post
+
+    def get_context_data(self, **kwargs):
         """."""
-        self.post = Post.objects.get(id=self.kwargs['pk'])
-        return {'post': self.post}
+        context = super(PostView, self).get_context_data(**kwargs)
+        context['form'] = CommentForm
+        return context
+
+
+class NewCommentView(SingleObjectMixin, FormView):
+    """Handle comment view."""
+
+    template_name = 'posts/post.html'
+    form_class = CommentForm
+    model = Post
+
+    def form_valid(self, form):
+        """."""
+        form.instance.by_user = self.request.user
+        form.instance.on_post = self.object
+        form.save()
+        return super(NewCommentView, self).form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        """Post comment method."""
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+        self.object = self.get_object()
+        return super(
+            NewCommentView, self).post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        """Redirect after success."""
+        return reverse_lazy(
+            'post', kwargs={'pk': self.object.pk})
+
+
+class PostWithCommentsView(View):
+    """Post view including comments."""
+
+    def get(self, request, *args, **kwargs):
+        """Get request."""
+        view = PostView.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """Post request."""
+        view = NewCommentView.as_view()
+        return view(request, *args, **kwargs)
 
 
 class NewPostView(CreateView):
