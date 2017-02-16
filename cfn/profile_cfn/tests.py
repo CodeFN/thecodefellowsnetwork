@@ -24,36 +24,9 @@ class UserFactory(factory.django.DjangoModelFactory):
     )
 
 RETURNED_JSON = """{
-  "login": "iamrobinhood12345",
-  "id": 11498059,
   "avatar_url": "https://avatars.githubusercontent.com/u/11498059?v=3",
-  "gravatar_id": "",
-  "url": "https://api.github.com/users/iamrobinhood12345",
   "html_url": "https://github.com/iamrobinhood12345",
-  "followers_url": "https://api.github.com/users/iamrobinhood12345/followers",
-  "following_url": "https://api.github.com/users/iamrobinhood12345/following{/other_user}",
-  "gists_url": "https://api.github.com/users/iamrobinhood12345/gists{/gist_id}",
-  "starred_url": "https://api.github.com/users/iamrobinhood12345/starred{/owner}{/repo}",
-  "subscriptions_url": "https://api.github.com/users/iamrobinhood12345/subscriptions",
-  "organizations_url": "https://api.github.com/users/iamrobinhood12345/orgs",
-  "repos_url": "https://api.github.com/users/iamrobinhood12345/repos",
-  "events_url": "https://api.github.com/users/iamrobinhood12345/events{/privacy}",
-  "received_events_url": "https://api.github.com/users/iamrobinhood12345/received_events",
-  "type": "User",
-  "site_admin": false,
-  "name": "William Benjamin Shields",
-  "company": null,
-  "blog": "https://github.com/iamrobinhood12345",
-  "location": "World",
-  "email": "bshields23@gmail.com",
-  "hireable": true,
   "bio": "I move fast and break my computer.",
-  "public_repos": 43,
-  "public_gists": 7,
-  "followers": 3,
-  "following": 17,
-  "created_at": "2015-03-16T07:34:21Z",
-  "updated_at": "2017-02-16T04:28:57Z"
 }"""
 
 
@@ -110,9 +83,6 @@ class FrontendTests(TestCase):
         self.request = RequestFactory()
         self.photo = SimpleUploadedFile('test.jpg', open('cfn/static/images/cf_logo.png', 'rb').read())
         self.users = [UserFactory.create() for i in range(5)]
-        for each in self.users:
-            each.password = 'testpassword'
-            each.save()
 
     def log_in_test_user(self):
         """Log in the test user."""
@@ -217,8 +187,8 @@ class FrontendTests(TestCase):
         test_user = self.users[0]
         self.log_in_test_user()
         test_user2 = self.users[1]
-        self.client.post('/profile/test_user2/')  # <-- Follow
-        self.client.post('/profile/test_user2/')  # <-- Unfollow
+        self.client.post('/profile/' + test_user2.username + '/')  # <-- Follow
+        self.client.post('/profile/' + test_user2.username + '/')  # <-- Unfollow
         self.assertTrue(test_user.profile not in test_user2.followed_by.all())
 
     # Marc Tues
@@ -227,8 +197,8 @@ class FrontendTests(TestCase):
         test_user = self.users[0]
         self.log_in_test_user()
         test_user2 = self.users[1]
-        self.client.post('/profile/test_user2/')  # <-- Follow
-        self.client.post('/profile/test_user2/')  # <-- Unfollow
+        self.client.post('/profile/' + test_user2.username + '/')  # <-- Follow
+        self.client.post('/profile/' + test_user2.username + '/')  # <-- Unfollow
         self.assertTrue(test_user2 not in test_user.profile.follows.all())
 
     # Marc Tues
