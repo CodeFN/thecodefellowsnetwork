@@ -10,10 +10,14 @@ from django.views.generic.edit import CreateView, UpdateView
 from posts.models import Post
 from posts.forms import AddPostForm, EditPostForm, CommentForm
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class PostsView(ListView):
+
+class PostsView(LoginRequiredMixin, ListView):
     """Posts View."""
 
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
     template_name = 'posts/posts.html'
 
     def get_context_data(self):
@@ -26,9 +30,11 @@ class PostsView(ListView):
         return {}
 
 
-class PostView(DetailView):
+class PostView(LoginRequiredMixin, DetailView):
     """."""
 
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
     template_name = 'posts/post.html'
     model = Post
 
@@ -72,8 +78,11 @@ class NewCommentView(SingleObjectMixin, FormView):
             'post', kwargs={'pk': self.object.pk})
 
 
-class PostWithCommentsView(View):
+class PostWithCommentsView(LoginRequiredMixin, View):
     """Post view including comments."""
+
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
 
     def get(self, request, *args, **kwargs):
         """Get request."""
@@ -86,9 +95,11 @@ class PostWithCommentsView(View):
         return view(request, *args, **kwargs)
 
 
-class NewPostView(CreateView):
+class NewPostView(LoginRequiredMixin, CreateView):
     """."""
 
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
     model = Post
     template_name = "posts/new_post.html"
     success_url = reverse_lazy('posts')
@@ -100,9 +111,11 @@ class NewPostView(CreateView):
         return super(NewPostView, self).form_valid(form)
 
 
-class EditPostView(UpdateView):
+class EditPostView(LoginRequiredMixin, UpdateView):
     """."""
 
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
     model = Post
     template_name = "posts/edit_post.html"
     success_url = reverse_lazy('posts')
@@ -121,9 +134,11 @@ class EditPostView(UpdateView):
         return super(EditPostView, self).form_valid(form)
 
 
-class DeletePostView(DeleteView):
+class DeletePostView(LoginRequiredMixin, DeleteView):
     """Delete a post."""
 
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
     model = Post
     success_url = reverse_lazy('posts')
     template_name = 'posts/confirm_delete.html'
