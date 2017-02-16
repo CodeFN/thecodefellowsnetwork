@@ -68,7 +68,6 @@ class FrontendTests(TestCase):
         self.request = RequestFactory()
         self.photo = SimpleUploadedFile('test.jpg', open('cfn/static/images/cf_logo.png', 'rb').read())
 
-    # Ben Monday
     def add_user(self, username='test_user'):
         """Make a user and return his profile."""
         user = UserFactory.create()
@@ -126,6 +125,7 @@ class FrontendTests(TestCase):
         response = self.client.get("/profile/abcdefg")
         self.assertTrue(response.status_code == 301)
 
+    # Ben Monday
     def test_profile_route_uses_correct_template(self):
         """Test that the profile view renders the profile.html template."""
         self.add_user()
