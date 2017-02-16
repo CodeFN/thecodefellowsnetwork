@@ -7,7 +7,7 @@
 
 <a href="{% url 'new_post' %}">Make a new post</a>
 
-<table>
+<table class="table table-hover table-responsive">
   <thead>
     <tr>
       <th>Title</th>
@@ -43,8 +43,8 @@
       </td>
       <td>
         <a href="{% url 'post' pk=post.id %}">
-          {% if post.content|length > 20 %}
-            {{ post.content|slice:":20" }}...
+          {% if post.content|length > 40 %}
+            {{ post.content|slice:":40" }}...
           {% else %}
             {{ post.content }}
           {% endif %}

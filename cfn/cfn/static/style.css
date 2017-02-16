@@ -85,9 +85,15 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     bottom: 4.5px ;
 }
 
+textarea, select, input {
+    color: black;
+}
+
+.img-responsive {
+    margin-bottom: 10px;
+}
+
 .footer{
     background-color: black;
     height: 100px;
 }
-
-

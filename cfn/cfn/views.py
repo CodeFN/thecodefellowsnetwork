@@ -18,7 +18,7 @@ class HomeView(TemplateView):
                 fellow_posts = fellow.posts.all()
                 feed_posts = feed_posts | fellow_posts
             feed_posts = feed_posts.order_by('date_modified').reverse()
-        return {'feed_posts': feed_posts}
+            return {'feed_posts': feed_posts}
 
 
 class FindUserView(ListView):
@@ -29,4 +29,3 @@ class FindUserView(ListView):
     context_object_name = "fellows"
     paginate_by = 72
     queryset = User.objects.all().order_by('username')
-
