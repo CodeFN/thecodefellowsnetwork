@@ -1,8 +1,10 @@
 """Post views."""
 
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DeleteView, DetailView
+from django.views import View
+from django.views.generic import ListView, DeleteView, DetailView, FormView
+from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import CreateView, UpdateView
 
 from posts.models import Post
@@ -29,7 +31,6 @@ class PostView(DetailView):
 
     template_name = 'posts/post.html'
     model = Post
-    form = CommentForm
 
     def get_object(self, queryset=None):
         """Get the post to delete."""
@@ -41,6 +42,41 @@ class PostView(DetailView):
         context = super(PostView, self).get_context_data(**kwargs)
         context['form'] = CommentForm
         return context
+
+
+class CommentView(SingleObjectMixin, FormView):
+    """Handle comment view."""
+
+    template_name = 'posts/post.html'
+    form_class = CommentForm
+    model = Post
+
+    def post(self, request, *args, **kwargs):
+        """Post comment method."""
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+        self.object = self.get_object()
+        return super(
+            CommentView, self).post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        """Redirect after success."""
+        return reverse_lazy(
+            'post', kwargs={'pk': self.object.pk})
+
+
+class PostWithCommentsView(View):
+    """Post view including comments."""
+
+    def get(self, request, *args, **kwargs):
+        """Get request."""
+        view = PostView.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """Post request."""
+        view = CommentView.as_view()
+        return view(request, *args, **kwargs)
 
 
 class NewPostView(CreateView):
