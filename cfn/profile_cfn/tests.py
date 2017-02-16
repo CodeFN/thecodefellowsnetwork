@@ -1,4 +1,4 @@
-"""CFN Tests."""
+"""ProfileCfn Tests."""
 
 from django.test import TestCase, Client, RequestFactory
 from django.contrib.auth.models import User
@@ -30,10 +30,12 @@ class BackendTests(TestCase):
         """Set up for backend test runner."""
         self.users = [UserFactory.create() for i in range(5)]
 
+    # Ben Monday
     def test_profile_is_made_when_user_is_saved(self):
         """Test profile created when user is registered."""
         self.assertTrue(ProfileCfn.objects.count() == 5)
 
+    # Ben Monday
     def test_profile_is_associated_with_users(self):
         """Test profile has correct user instance."""
         profile = ProfileCfn.objects.first()
@@ -66,6 +68,7 @@ class FrontendTests(TestCase):
         self.request = RequestFactory()
         self.photo = SimpleUploadedFile('test.jpg', open('cfn/static/images/cf_logo.png', 'rb').read())
 
+    # Ben Monday
     def add_user(self, username='test_user'):
         """Make a user and return his profile."""
         user = UserFactory.create()
@@ -78,6 +81,7 @@ class FrontendTests(TestCase):
         """Log in the test user."""
         self.client.login(username=username, password='testpassword')
 
+    # Ben Monday
     def test_profile_view_authenticated_returns_status_ok(self):
         """Test profile view returns status code 200."""
         self.add_user()
@@ -85,11 +89,13 @@ class FrontendTests(TestCase):
         response = self.client.get('/profile', follow=True)
         self.assertTrue(response.status_code == 200)
 
+    # Ben Monday
     def test_profile_view_unauthenticated_returns_status_redirect(self):
         """Test profile view with unauthenticated client returns status code 302."""
         response = self.client.get("/profile/")
         self.assertTrue(response.status_code == 302)
 
+    # Ben Monday
     def test_other_profile_view_authenticated_returns_status_ok(self):
         """Test other profile view with authenticated client returns status code 200."""
         self.add_user()
@@ -99,12 +105,14 @@ class FrontendTests(TestCase):
             '/profile/' + new_user.username, follow=True)
         self.assertTrue(response.status_code == 200)
 
+    # Ben Monday
     def test_other_profile_view_unauthenticated_returns_status_redirect(self):
         """Test other profile view with unauthenticated client returns status code 301."""
         self.add_user()
         response = self.client.get("/profile/test_user")
         self.assertTrue(response.status_code == 301)
 
+    # Ben Monday
     def test_no_profile_authenticated_returns_status_not_found(self):
         """Test non-existing profile view with unauthenticated client returns status code 302."""
         self.add_user()
@@ -112,6 +120,7 @@ class FrontendTests(TestCase):
         response = self.client.get("/profile/abcdefg")
         self.assertTrue(response.status_code == 301)
 
+    # Ben Monday
     def test_no_profile_unauthenticated_returns_status_redirect(self):
         """Test non-existing profile view with unauthenticated client returns status code 302."""
         response = self.client.get("/profile/abcdefg")
