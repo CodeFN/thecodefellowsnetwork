@@ -78,11 +78,8 @@ class NewCommentView(SingleObjectMixin, FormView):
             'post', kwargs={'pk': self.object.pk})
 
 
-class PostWithCommentsView(LoginRequiredMixin, View):
+class PostWithCommentsView(View):
     """Post view including comments."""
-
-    login_url = '/'
-    redirect_field_name = 'redirect_to'
 
     def get(self, request, *args, **kwargs):
         """Get request."""
