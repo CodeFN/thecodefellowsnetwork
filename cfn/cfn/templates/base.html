@@ -24,17 +24,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/cf_logo.png' %}"height = 100, width= 100/></a>
+        <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/cf_logo.png' %}" height = 25, width= 25/></a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           {% if user.is_authenticated %}
-            <li class="active"><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'profile_self' %}">Profile</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
             <li><a href="{% url 'find_users' %}">Find Users</a></li>
             <li><a href="{% url 'posts' %}">Posts</a></li>
-
+            <li><a href="{% url 'logout' %}">Logout</a></li>
           {% endif %}
         </ul>
       </div>
