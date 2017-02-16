@@ -40,7 +40,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
 .post_section{
     background-color: black;
     border-radius: 10px;
-    padding-bottom: 1%;
+    width: 100%;
+    padding-bottom: 10px;
 }
 
 .post_list{
@@ -71,9 +72,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     padding-top: 2%;
 }
 
-.footer{
-    background-color: black;
-    height: 100px;
+.scrollable_feed{
+    height: 300px;
+    overflow: auto;
+    overflow-x: hidden;
+    border: 3px solid black;
 }
 
 .navbar-brand{
@@ -88,4 +91,9 @@ textarea, select, input {
 
 .img-responsive {
     margin-bottom: 10px;
+}
+
+.footer{
+    background-color: black;
+    height: 100px;
 }
