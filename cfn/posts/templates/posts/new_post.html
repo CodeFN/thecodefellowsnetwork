@@ -2,25 +2,29 @@
 {% block title %}New Post{% endblock %}
 
 {% block body %}
-<h1>New Post</h1>
-<form method="POST" enctype="multipart/form-data">
-{% csrf_token %}
-{% for field in form %}
-<fieldset class="control-group">
-  <label class="control-label" for="id_{{ field.name }}">
-    {{ field.label }}
-  </label>
-  <div class="controls">
-    {{ field }}
-    <p class="help-text">
-      {{ field.help_text }}
-    </p>
-  </div>
-</fieldset>
-{% endfor %}
-<button type="submit">
-  Submit
-</button>
-</form>
+<div class="container ">
+  <h1>New Post</h1>
+  <form method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+      {% csrf_token %}
+      {% for field in form %}
+      <fieldset class="control-group">
+        <label class="control-label" for="id_{{ field.name }}">
+          {{ field.label }}
+        </label>
+        <div class="controls">
+          {{ field }}
+          <p class="help-text">
+            {{ field.help_text }}
+          </p>
+        </div>
+      </fieldset>
+      {% endfor %}
+      <button type="submit" class="btn btn-danger">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
 
 {% endblock %}

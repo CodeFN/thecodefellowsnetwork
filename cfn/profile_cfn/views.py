@@ -16,7 +16,7 @@ def ProfileView(request):
     if request.user.is_authenticated():
         profile = get_object_or_404(ProfileCfn.objects, user__username=request.user.username)
         all_follows = profile.follows.all()
-        all_followed_by = profile.user.followed_by.all()
+        all_followed_by = profile.followed_by.all()
         follows_page = request.GET.get("follows_page", 1)
         followed_page = request.GET.get("followed_page", 1)
 
@@ -71,7 +71,6 @@ def ProfileViewOther(request, slug):
             else:
                 request.user.profile.follows.add(to_follow)
             return HttpResponseRedirect("/profile/" + slug)
-
         return render(request, "profile_cfn/profile.html", {
             'profile': profile,
             'follows': follows,

@@ -1,40 +1,70 @@
 {% extends 'base.html' %}
 {% block body %}
-  <div class="container-fluid text-center">  
-  {% if request.user.is_authenticated %} 
-    <div class="col-sm-12 text-left"> 
-        <p>Logged in as: {{ request.user }}</p>
-    </div>
-    <div class="row content">
-    <div class="col-sm-2 sidenav"></div>
-    <div class="col-sm-8 text-left"> 
-      <h1>The Code Fellows Network</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <hr>
-    </div>
-    {% else %}
+  <div class="container-fluid text-center">
+    {% if request.user.is_authenticated %}
+      <div class="col-sm-12 text-left">
+        <p>Logged in as:
+          <a href="{% url 'profile_self' %}">{{ request.user }}</a></p>
+      </div>
+      <div class="row content">
+        <div class="col-sm-2 sidenav"></div>
+        <div class="col-sm-8 text-left">
+          <h1>The Code Fellows Network</h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident.</p>
+          {% if feed_posts|length > 0 %}
+          <h3>Lastest Updates</h3>
+            <div class="container text-center post_section scrollable_feed">
+              <div class="row ">
+                {% for post in feed_posts %}
+                  <div class="row post_row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8 post_list">
+                      <h3>{{ post.title }}</h3>
+                      <h6>Uploaded by: {{ post.author }}</h6>
+                      <p>{{ post.category }} uploaded {{ post.date_modified }}</p>
+                      {% if post.content|length > 255 %}
+                          <p class='feed_content'>{{ post.content|slice:":255" }}... <a href="{% url 'post' post.id %}"> continue</a></p>
+                      {% else %}    
+                          <p class='feed_content'>{{ post.content }}</p>
+                      {% endif %}
+                      <a href="{{ post.url }}"target="_blank">{{ post.url }}</a><br><a href="{% url 'post' post.id %}">To Post</a>
+                      
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div><hr>
+          {% endif %}
+          <h5>Site Map: </h5>
+          <ul>
+            <a href="{% url 'profile_self' %}"><li>Visit Your Profile Page</li></a>
+            <a href="{% url 'new_post' %}"><li>Add a New Post</li></a>
+            <a href="{% url 'find_users' %}"><li>Browse Other Users</li></a>
+            <a href="{% url 'posts' %}"><li>Browse Posts</li></a>
+          </ul>
+          <hr>
+        </div>
+      {% else %}
         <div class="row content">
-        <div class="col-sm-2 sidenav"></div>
-        <div class="col-sm-4 text-left homebox"> 
-        <p>
-        <h3>Welcome to the Code Fellows Network</h3>
-            <ul>
-             <li>Follow your fellow Code Fellows!</li>
-             <li>Post links to your deployed sites!</li>
-             <li>Share resources that helped you!</li>
-            </ul>
-
-        </p>
-        </div>
-        <div class="col-sm-4 text-left homebox"> 
-        <p>
-        <h3>Log in or sign up with Github!</h3>
-             <a href="{% url 'social:begin' 'github' %}"><button class="btn btn-lg btn-primary btn-block" type="submit">Log In / Register</button></a>
-
-        </p>
-        </div>
-        <div class="col-sm-2 sidenav"></div>
-    {% endif %}
-  </div>
-</div>
-{% endblock %}
+          <div class="col-sm-2 sidenav"></div>
+          <div class="col-sm-4 text-left homebox">
+            <p>
+              <h3>Welcome to the Code Fellows Network</h3>
+              <ul>
+                <li>Follow your fellow Code Fellows!</li>
+                <li>Post links to your deployed sites!</li>
+                <li>Share resources that helped you!</li>
+              </ul>
+            </p>
+          </div>
+          <div class="col-sm-4 text-left homebox">
+            <p>
+              <h3>Log in or sign up with Github!</h3>
+              <a href="{% url 'social:begin' 'github' %}"><button class="btn btn-lg btn-primary btn-block" type="submit">Log In / Register</button></a>
+            </p>
+          </div>
+          <div class="col-sm-2 sidenav"></div>
+        {% endif %}
+      </div>
+    </div>
+  {% endblock %}
