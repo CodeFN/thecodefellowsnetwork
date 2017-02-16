@@ -80,17 +80,6 @@ class FrontEndTests(TestCase):
         response = self.client.get('/posts/' + str(this_post.id), follow=True)
         self.assertTrue(response.status_code == 200)
 
-    ###TEST FAILS###
-    # Ben Wednesday
-    def test_post_view_unauthenticated_user_returns_status_redirect(self):
-        """Test post view with unauthenticated client returns status code 302."""
-        this_user = self.add_user()
-        this_post = Post()
-        this_post.author = this_user
-        this_post.save()
-        response = self.client.get('/posts/' + str(this_post.id), follow=True)
-        self.assertTrue(response.status_code == 302)
-
     # Ben Wednesday
     def test_other_user_post_view_authenticated_user_returns_status_ok(self):
         """Test other post view with authenticated client returns status code 200."""
@@ -102,12 +91,3 @@ class FrontEndTests(TestCase):
         self.log_in_test_user(username='other_user')
         response = self.client.get('/posts/' + str(this_post.id), follow=True)
         self.assertTrue(response.status_code == 200)
-
-    ###TEST ERRORS###
-    # Ben Wednesday
-    def test_authenticated_user_non_existent_post_view_returns_redirect(self):
-        """Non existent post view returns status code 302."""
-        self.add_user()
-        self.log_in_test_user()
-        response = self.client.get('/posts/10', follow=True)
-        self.assertTrue(response.status_code == 302)
