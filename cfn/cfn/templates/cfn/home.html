@@ -42,7 +42,7 @@
                       {% endif %}
                       <p>
                         <a href="{% url 'post' post.id %}">
-                          Comments: ({{ post.comments|length }})
+                          Comments: ({{ post.comments.all|length }})
                         </a>
                       </p>
                     </div>
