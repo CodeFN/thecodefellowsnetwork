@@ -28,12 +28,10 @@
   {% if post.author.username == user.username %}
   <p>
     <a href="{% url 'edit_post' pk=post.id %}">
-      Edit this post
+      <button class="btn btn-danger">&#60; Edit this post /&#62;</button>
     </a>
-  </p>
-  <p>
     <a href="{% url 'delete_post' pk=post.id %}">
-      Delete this post
+      <button class="btn btn-danger">&#60; Delete this post /&#62;</button>
     </a>
   </p>
   {% endif %}
@@ -57,7 +55,7 @@
   <form method="POST">
   {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Post Comment" class="btn btn-danger">
+    <input type="submit" value="< Post Comment />" class="btn btn-danger">
   </form>
   <p></p>
 </div>

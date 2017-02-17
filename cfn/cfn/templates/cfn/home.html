@@ -45,25 +45,19 @@
           <hr>
         </div>
       {% else %}
-        <div class="row content">
-          <div class="col-sm-2 sidenav"></div>
-          <div class="col-sm-4 text-left homebox">
-            <p>
-              <h3>Welcome to the Code Fellows Network</h3>
-              <ul>
-                <li>Follow your fellow Code Fellows!</li>
-                <li>Post links to your deployed sites!</li>
-                <li>Share resources that helped you!</li>
+        <div class="row content daddy">
+          <div class="container handshake">
+            <div class="login-box">
+              <h3 class="white">Welcome to the Code Fellows Network</h3>
+              <ul class="list-group">
+                <li class="list-group-item">Follow your fellow Code Fellows!</li>
+                <li class="list-group-item">Post links to your deployed sites!</li>
+                <li class="list-group-item">Share resources that helped you!</li>
               </ul>
-            </p>
+              <a href="{% url 'social:begin' 'github' %}"><button class="btn btn-lg btn-danger" type="submit">&#60; Log In / Register via Github! /&#62;</button></a>
+              <p></p>
+            </div>
           </div>
-          <div class="col-sm-4 text-left homebox">
-            <p>
-              <h3>Log in or sign up with Github!</h3>
-              <a href="{% url 'social:begin' 'github' %}"><button class="btn btn-lg btn-primary btn-block" type="submit">Log In / Register</button></a>
-            </p>
-          </div>
-          <div class="col-sm-2 sidenav"></div>
         {% endif %}
       </div>
     </div>
