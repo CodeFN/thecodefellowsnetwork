@@ -29,3 +29,9 @@ class FindUserView(ListView):
     context_object_name = "fellows"
     paginate_by = 72
     queryset = User.objects.all().order_by('username')
+
+
+class AboutView(TemplateView):
+    """About View."""
+
+    template_name = 'cfn/about.html'

@@ -19,7 +19,7 @@ from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
 
-from cfn.views import HomeView, FindUserView
+from cfn.views import HomeView, FindUserView, AboutView
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^profile/', include('profile_cfn.urls')),
     url(r'^find/users/', FindUserView.as_view(), name='find_users'),
     url(r'^posts/', include('posts.urls')),
-
+    url(r'^about/', AboutView.as_view(), name='about'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
