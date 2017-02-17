@@ -18,6 +18,7 @@ The Code Fellows Network is a social media platform designed by and for use by s
 ## 1. Requirements
 
 python3.4 or newer
+
 postgresql
 
 ## 2. Detailed Build Instructions
