@@ -100,4 +100,26 @@ Migrate database models for successful model rendering in your database instance
 ./manage.py runserver
 ```
 
+## 3. Architecture
+
+cfn: main django app name
+
+cfn/cfn: main django app
+cfn/profile_cfn: profile/fellow app
+cfn/posts: posts/comments/likes app
+
+
 ## 3. Testing
+
+Files
+
+cfn/cfn/tests.py
+cfn/profile_cfn/tests.py
+cfn/posts/tests.py
+
+To run
+```bash
+./manage.py test
+```
+
+## 4. 
