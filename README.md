@@ -14,7 +14,7 @@ The Code Fellows Network is a social media platform designed by and for use by s
   1. Requirements
   2. Detailed Build Instructions
   3. Testing
-  4. Directions
+  4. Future
 
 ## 1. Requirements
 
