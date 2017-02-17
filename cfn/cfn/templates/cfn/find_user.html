@@ -1,35 +1,44 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-
-<ul>
-<div class="container text-center profile_container"> 
-    <h3 id='following_section'>Fellows:</h3>
-        <div class="row following_row">
-    {% for fellow in fellows %}
-        {% if fellow.username != request.user.username %}
-        {% if fellow.username != 'admin' %}
-        <a href="{% url 'profile_other' fellow.username %}"><div class="col-sm-2 following_list">
-                {% if fellow.profile.avatar_url %}
-                    <img src="{{ fellow.profile.avatar_url }}" alt="Image"height = 100, width= 100>
-                {% else %}
-                    <img src="{% static 'images/cf_logo.png' %}"height = 100, width= 100/>
-                {% endif %}
-            <p>{{ fellow.username }}</p>
-            </div></a>
-        {% endif %}
-        {% endif %}
-    {% endfor %}
-    </ul>
+  <div class="row content text-center">
+    <div class="container text-center profile_info white-bg"> 
+      <h3 id='following_section'>
+        Fellows
+      </h3>
+      <h4>
+        Total Users: {{ fellows|length }}
+      </h4>
+      <div class="row following_row">
+        {% for fellow in fellows %}
+          {% if fellow.username != request.user.username %}
+            {% if fellow.username != 'admin' %}
+              <a href="{% url 'profile_other' fellow.username %}">
+                <div class="col-sm-2 following_list">
+                  {% if fellow.profile.avatar_url %}
+                    <img src="{{ fellow.profile.avatar_url }}" class="avatar" />
+                  {% else %}
+                    <img src="{% static 'images/cf_logo.png' %}" class="avatar" />
+                  {% endif %}
+                  <p>{{ fellow.username }}</p>
+                </div>
+              </a>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    <nav>
+      <ul>
+        {% for page_num in paginator.page_range %}
+          <li>
+            <a href="?page={{ page_num }}">
+              Page {{ page_num }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
     </div>
-</div>
 
-<nav>
-    <ul>
-    {% for page_num in paginator.page_range %}
-        <li><a href="?page={{ page_num }}">Page {{ page_num }}</a></li>
-    {% endfor %}
-    </ul>
-</nav>
-
+  </div>
 {% endblock %}

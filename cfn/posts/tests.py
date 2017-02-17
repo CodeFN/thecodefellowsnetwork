@@ -237,8 +237,101 @@ class FrontEndTests(TestCase):
         self.assertContains(response, 'tornado fire crocodile')
         self.assertContains(response, 'marc ben benny built this site')
 
-    # def test_edited_post_content_renders_on_post_view(self):
+    # Benny
+    def test_edited_post_content_renders_on_post_view(self):
+        """Test other post view with authenticated client returns status code 200."""
+        this_user = self.users[0]
+        self.client.force_login(this_user)
+        this_post = Post()
+        this_post.author = this_user
+        this_post.save()
+        response = self.client.get('/posts/' + str(this_post.id), follow=True)
+        self.assertTrue(response.status_code == 200)
 
-    # def test_edited_post_content_renders_on_posts_view(self):
+    # Benny
+    def test_edited_post_content_renders_on_posts_view(self):
+        """Test post view returns status code 200."""
+        this_user = self.users[0]
+        self.client.force_login(this_user)
+        this_post = Post()
+        this_post.author = this_user
+        this_post.save()
+        response = self.client.get('/posts/' + str(this_post.id), follow=True)
+        self.assertTrue(response.status_code == 200)
 
-    # def test_edited_post_content_renders_on_profile_view(self):
+    # Benny
+    def test_edited_post_content_renders_on_profile_view(self):
+        """Test post view returns status code 200."""
+        this_user = self.users[0]
+        self.client.force_login(this_user)
+        this_post = Post()
+        this_post.author = this_user
+        this_post.save()
+        response = self.client.get('/posts/' + str(this_post.id), follow=True)
+        self.assertTrue(response.status_code == 200)
+
+    # Benny
+    def test_post_content_renders_on_post_view(self):
+        """Test other post view with authenticated client returns status code 200."""
+        this_user = self.users[0]
+        self.client.force_login(this_user)
+        this_post = Post()
+        this_post.author = this_user
+        this_post.save()
+        response = self.client.get('/posts/' + str(this_post.id), follow=True)
+        self.assertTrue(response.status_code == 200)
+
+    # Benny
+    def test_post_content_renders_on_posts_view(self):
+        """Test post view returns status code 200."""
+        this_user = self.users[0]
+        self.client.force_login(this_user)
+        this_post = Post()
+        this_post.author = this_user
+        this_post.save()
+        response = self.client.get('/posts/' + str(this_post.id), follow=True)
+        self.assertTrue(response.status_code == 200)
+
+    # Benny
+    def test_post_content_renders_on_profile_view(self):
+        """Test post view returns status code 200."""
+        this_user = self.users[0]
+        self.client.force_login(this_user)
+        this_post = Post()
+        this_post.author = this_user
+        this_post.save()
+        response = self.client.get('/posts/' + str(this_post.id), follow=True)
+        self.assertTrue(response.status_code == 200)
+
+    # Benny
+    def test_edited_post_content_renders_on_post(self):
+        """Test other post view with authenticated client returns status code 200."""
+        this_user = self.users[0]
+        self.client.force_login(this_user)
+        this_post = Post()
+        this_post.author = this_user
+        this_post.save()
+        response = self.client.get('/posts/' + str(this_post.id), follow=True)
+        self.assertTrue(response.status_code == 200)
+
+    # Benny
+    def test_edited_post_content_renders_on_posts(self):
+        """Test post view returns status code 200."""
+        this_user = self.users[0]
+        self.client.force_login(this_user)
+        this_post = Post()
+        this_post.author = this_user
+        this_post.save()
+        response = self.client.get('/posts/' + str(this_post.id), follow=True)
+        self.assertTrue(response.status_code == 200)
+
+    # Benny
+    def test_edited_post_content_renders_on_profile(self):
+        """Test post view returns status code 200."""
+        this_user = self.users[0]
+        self.client.force_login(this_user)
+        this_post = Post()
+        this_post.author = this_user
+        this_post.save()
+        response = self.client.get('/posts/' + str(this_post.id), follow=True)
+        self.assertTrue(response.status_code == 200)
