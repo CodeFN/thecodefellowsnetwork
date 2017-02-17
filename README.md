@@ -20,14 +20,14 @@ This build is for Linux and OSX systems. Microsoft=unknown.
 python3.4 or newer
 postgresql
 
-###GIT:
+###Git:
 Clone thecodefellowsnetwork into your system.
 
 ```bash
 git clone https://github.com/CodeFN/thecodefellowsnetwork.git
 ```
 
-###VIRTUAL ENVIRONMENTS:
+###Virtual Environments:
 We suggest developing in a virtual environment.
 
 ```bash
@@ -44,7 +44,7 @@ deactivate
 ```
 You may have to deactivate and reactivate after making adjustments to environment variables.
 
-###ENVIRONMENT VARIABLES:
+###Environment Variables:
 The following environment variables are required.
 ```bash
 DB_NAME
@@ -61,13 +61,13 @@ GITHUB_API_SECRET
 Export or add to env/bin/activate script.
 Some of these must match values from your database instance or Github Social Auth.
 
-###REQUIREMENTS.PIP:
+###Requirements.pip:
 Install reqiurements.
 ```bash
 pip install -r requirements.pip
 ```
 
-###CREATEDB:
+###Createdb:
 ```bash
 createdb <DB_NAME>
 ```
@@ -77,11 +77,11 @@ To destroy database
 dropdb <DB_NAME>
 ```
 
-###GITHUB SOCIAL AUTH:
+###Github Social Auth:
 
 Set GITHUB_APP_ID and GITHUB_API_SECRET to the correct variables after signing up for social authentication through your github account. You must have a github account.
 
-###MIGRATIONS:
+###Migrations:
 
 Migrate database models for successful model rendering in your database instance.
 ```bash
@@ -89,10 +89,9 @@ Migrate database models for successful model rendering in your database instance
 ./manage.py migrate
 ```
 
-###RUNSERVER:
+###Runserver:
 ```bash
 ./manage.py runserver
 ```
 
 ##Testing
-
