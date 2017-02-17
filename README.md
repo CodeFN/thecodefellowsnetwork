@@ -2,10 +2,18 @@
 # The Code Fellows Network
 The perfect network for the code academy
 
+http://52.35.131.204/
+
 
 ## Concept
 
 The Code Fellows Network is a social media platform designed by and for use by students of [Code Fellows](https://www.codefellows.org/). It is a social media tool to assist students in their studies as they progress through Code Fellows bootcamp. The site is designed to be easily extendable and the hope is that future classes will build upon this original project.
+
+## Build Instructions
+
+On Linux and OSX systems:
+
+
 
 ## Built in Python with...
 
