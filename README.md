@@ -11,6 +11,62 @@ The Code Fellows Network is a social media platform designed by and for use by s
 
 ## Build Instructions
 
+This build is for Linux and OSX systems. Microsoft=unknown.
+
+GIT:
+Clone thecodefellowsnetwork into your system.
+
+```bash
+git clone https://github.com/CodeFN/thecodefellowsnetwork.git
+```
+
+VIRTUAL ENVIRONMENTS:
+We suggest developing in a virtual environment.
+
+```bash
+python3 -m venv env
+```
+
+To activate
+```bash
+source env/bin/activate
+```
+To deactivate
+```bash
+deactivate
+```
+You may have to deactivate and reactivate after making adjustments to environment variables.
+
+ENVIRONMENT VARIABLES:
+The following environment variables are required.
+```bash
+
+```
+
+clone
+venv
+envs
+reactivate
+pip install
+createdb
+github social auth
+makemigrations
+migrate
+./manage.py runserver
+tests
+
+architecture overview
+built with django
+app name cfn
+apps: profilecfn posts
+
+directions
+
+security, groups, assignments, direct messaging, javascript, code comparison, front end improvements
+
+
+
+
 On Linux and OSX systems:
 
 ```bash
@@ -28,6 +84,9 @@ export
 
 pip install requirements -r requirements.pip
 ```
+
+
+
 
 
 
