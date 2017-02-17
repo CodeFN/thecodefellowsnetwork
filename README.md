@@ -9,9 +9,16 @@ The perfect network for the code academy: http://52.35.131.204/
 
 The Code Fellows Network is a social media platform designed by and for use by students of [Code Fellows](https://www.codefellows.org/). It is a social media tool to assist students in their studies as they progress through Code Fellows bootcamp. The site is designed to be easily extendable and the hope is that future classes will build upon this original project.
 
-## Build Instructions
+## Requirements
+
+python3.4 or newer
+postgresql
+
+## Detailed Build Instructions
 
 This build is for Linux and OSX systems. Microsoft=unknown.
+python3.4 or newer
+postgresql
 
 GIT:
 Clone thecodefellowsnetwork into your system.
@@ -40,8 +47,38 @@ You may have to deactivate and reactivate after making adjustments to environmen
 ENVIRONMENT VARIABLES:
 The following environment variables are required.
 ```bash
-
+DB_NAME
+DB_USERNAME
+DB_PASSWORD
+DB_HOST
+DEBUG
+DB_PORT
+ALLOWED_HOSTS
+SECRET_KEY
+GITHUB_APP_ID
+GITHUB_API_SECRET
 ```
+Export or add to env/bin/activate script.
+Some of these must match values from your database instance or Github Social Auth.
+
+REQUIREMENTS.PIP:
+Install reqiurements.
+```bash
+pip install -r requirements.pip
+```
+
+CREATEDB:
+```bash
+createdb <DB_NAME>
+```
+
+To destroy database
+```bash
+dropdb <DB_NAME>
+```
+
+GITHUB SOCIAL AUTH:
+
 
 clone
 venv
