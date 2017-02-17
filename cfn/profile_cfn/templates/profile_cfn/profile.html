@@ -1,153 +1,181 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-<div class="container">
-  {# ---- FOLLOW/UNFOLLOW BUTTON ----- #}
-  {% if request.user != profile.user %}
-    {% if profile.user in user_follows %}
-      <form action='' method='POST'>
-        {% csrf_token %}
-        <button class="btn btn-md btn-danger" type="submit" name="unfollow">&#60; Unfollow /&#62;</button>
-      </form>
-    {% else %}
-      <form action='' method='POST'>
-        {% csrf_token %}
-        <button class="btn btn-md btn-danger" type="submit" name="follow">&#60; Follow /&#62;</button>
-      </form>
-    {% endif %}
-  {# ------ UPDATE YOUR OWN PROFILE BUTTON ------- #}
-  {% else %}
-    <a href="{% url 'edit_profile' %}"><button class="btn btn-md btn-danger">&#60; Update Profile /&#62;</button></a>
-  {% endif %}
-  {# ---------- BEGIN PROFILE STUFF --------- #}
-  <div class="container profile_info">
-    <div class="row">
-      <h1>{{ profile.user.username }}'s profile</h1>
-      <div class="col-sm-2">
-        {% if profile.avatar_url %}
-          <img src="{{ profile.avatar_url }}" class="avatar" />
+  <div class="row content text-center">
+    <div class="container white-bg text-left profile_info">
+      {# ---- FOLLOW/UNFOLLOW BUTTON ----- #}
+      {% if request.user != profile.user %}
+        {% if profile.user in user_follows %}
+          <form action='' method='POST'>
+            {% csrf_token %}
+            <button class="btn btn-md btn-danger" type="submit" name="unfollow">&#60; Unfollow /&#62;</button>
+          </form>
         {% else %}
-          <img src="{% static 'images/cf_logo.png' %}" class="avatar" />
+          <form action='' method='POST'>
+            {% csrf_token %}
+            <button class="btn btn-md btn-danger" type="submit" name="follow">&#60; Follow /&#62;</button>
+          </form>
         {% endif %}
-      </div>
-
-      <div class="col-sm-8">
-        <p>{{ profile.user.first_name }} {{ profile.user.last_name}}</p>
-        <p>About: {{ profile.about }}</p>
-        <p>Github:
-          <a href="{{ profile.github_url }}"target='blank'>
-            {{ profile.github_url }}
-          </a>
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="row profile_quick_jumps">
-    <div class="col-sm-3">
-    </div>
-    <div class="col-sm-2">
-      <a href="#">POSTS</a>
-    </div>
-    <div class="col-sm-2">
-      <a href="#following_section">FOLLOWING</a>
-    </div>
-    <div class="col-sm-2">
-      <a href="#followed_by_section">FOLLOWED BY</a>
-    </div>
-  </div>
-  <hr>
-  {# ------- USER POSTS -------- #}
-  {% if profile.user.posts.all|length > 0 %}
-    <div class="container text-center post_section scrollable_feed">
-      <h3 id='post_section'>Posts:</h3>
-      <div class="row ">
-        {% for post in profile.user.posts.all|dictsortreversed:"date_modified"%}
-        <div class="row post_row">
-          <div class="col-sm-12 post_list">
-            <h3><a href="{% url 'post' post.id %}">{{ post.title }}</a></h3>
-            <p>{{ post.category }} uploaded {{ post.date_modified }}</p>
-            {% if post.content|length > 255 %}
-            <p class='feed_content'>{{ post.content|slice:":255" }}... <a href="{% url 'post' post.id %}"> continue</a></p>
+      {# ------ UPDATE YOUR OWN PROFILE BUTTON ------- #}
+      {% else %}
+        <a href="{% url 'edit_profile' %}"><button class="btn btn-md btn-danger">&#60; Update Profile /&#62;</button></a>
+      {% endif %}
+      {# ---------- BEGIN PROFILE STUFF --------- #}
+      <div class="container profile_info">
+        <div class="row">
+          <h1>{{ profile.user.username }}'s profile</h1>
+          <div class="col-sm-3">
+            {% if profile.avatar_url %}
+              <img src="{{ profile.avatar_url }}" class="avatar" />
             {% else %}
-            <p class='feed_content'>{{ post.content }}</p>
+              <img src="{% static 'images/cf_logo.png' %}" class="avatar" />
             {% endif %}
-            <a href="{{ post.url }}" target="_blank">{{ post.url }}</a>     
+          </div>
+
+          <div class="col-sm-8">
+            <p>{{ profile.user.first_name }} {{ profile.user.last_name}}</p>
+            <p>About: {{ profile.about }}</p>
+            <p>Github:
+              <a href="{{ profile.github_url }}"target='blank'>
+                {{ profile.github_url }}
+              </a>
+            </p>
           </div>
         </div>
-        {% endfor %}
       </div>
-    </div>
-  <hr>
-  {% endif %}
-  {# --------- FOLLOWING SECTION --------- #}
-  <div class="container text-center profile_container">
-    {% if follows %}
-      <h3 id='following_section'>Following:</h3>
-      <div class="row following_row">
-      {% for fellow in follows %}
-        <a href="{% url 'profile_other' fellow.username %}">
-        <div class="col-sm-2 following_list">
-          {% if fellow.profile.avatar_url %}
-            <img src="{{ fellow.profile.avatar_url }}" class="avatar" />
-          {% else %}
-            <img src="{% static 'images/cf_logo.png' %}" class="avatar" />
-          {% endif %}
-          <p>{{ fellow.username }}</p>
-        </div></a>
-      {% endfor %}
-    <div class="row">
-      <nav class='page-nav'>
-        <ul>
-        {% if follows.has_previous %}
-          <li>
-            <a href="?followed_page={{ followed_by.number }}&follows_page={{ follows.previous_page_number }}#following_section">Previous</a>
-          </li>
-        {% endif %}
-        {% if follows.has_next %}
-          <li>
-            <a href="?followed_page={{ followed_by.number }}&follows_page={{ follows.next_page_number }}#following_section">Next</a>
-          </li>
-        {% endif %}
-        </ul>
-      </nav>
-    </div>
-    {% endif %}
-  </div>
-  {# --------- FOLLOWERS SECTION --------- #}
-  <hr>
-  {% if followed_by %}
-    <h3 id='followed_by_section'>Followed By:</h3>
-    <div class="row followed_by_row">
-      {% for fellow in followed_by %}
-      <a href="{% url 'profile_other' fellow.user.username %}">
-        <div class="col-sm-2 followed_by_list">
-          {% if fellow.avatar_url %}
-            <img src="{{ fellow.avatar_url }}" class="avatar" />
-          {% else %}
-            <img src="{% static 'images/cf_logo.png' %}" class="avatar" />
-          {% endif %}
-          <p>{{ fellow.user.username }}</p>
+      <div class="row profile_quick_jumps text-center">
+        <div class="col-sm-4">
+          <a href="#">POSTS</a>
         </div>
-      </a>
-      {% endfor %}
-      <div class="row">
-        <nav class='page-nav'>
-          <ul>
-          {% if followed_by.has_previous %}
-            <li>
-              <a href="?followed_page={{ followed_by.previous_page_number }}&follows_page={{ follows.number }}#followed_by_section">Previous</a>
-            </li>
-          {% endif %}
-          {% if followed_by.has_next %}
-            <li>
-              <a href="?followed_page={{ followed_by.next_page_number }}&follows_page={{ follows.number }}#followed_by_section">Next</a>
-            </li>
-          {% endif %}
-          </ul>
-        </nav>
+        <div class="col-sm-4">
+          <a href="#following_section">FOLLOWING</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="#followed_by_section">FOLLOWED BY</a>
+        </div>
+      </div>
+      <hr>
+      {# ------- USER POSTS -------- #}
+      {% if profile.user.posts.all|length > 0 %}
+        <div class="container text-center post_section scrollable_feed">
+          <h3 id='post_section'>Posts:</h3>
+          <div class="row ">
+            {% for post in profile.user.posts.all|dictsortreversed:"date_modified"%}
+            <div class="row post_row">
+              <div class="col-sm-12 post_list">
+                <h3><a href="{% url 'post' post.id %}">{{ post.title }}</a></h3>
+                <p>{{ post.category }} uploaded {{ post.date_modified }}</p>
+                {% if post.url %}
+                  <p>
+                    External Link:
+                      <a href="{{ post.url }}"target="_blank">
+                        {{ post.url }}
+                      </a>
+                  </p>
+                {% endif %}
+                {% if post.content|length > 255 %}
+                <p class='feed_content'>{{ post.content|slice:":255" }}...
+                  <a href="{% url 'post' post.id %}"> continue</a></p>
+                {% else %}
+                <p class='feed_content'>{{ post.content }}</p>
+                {% endif %}
+                <p>
+                  <a href="{% url 'post' post.id %}">
+                    Comments: ({{ post.comments|length }})
+                  </a>
+                </p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      <hr>
+      {% endif %}
+      {# --------- FOLLOWING SECTION --------- #}
+      <div class="container text-center profile_container">
+        {% if follows %}
+          <h3 id='following_section'>
+            Following
+          </h3>
+          <h4>
+            Total Following: {{ follows|length }}
+          </h4>
+          <div class="row following_row">
+            {% for fellow in follows %}
+              <a href="{% url 'profile_other' fellow.username %}">
+                <div class="col-sm-2 following_list">
+                  {% if fellow.profile.avatar_url %}
+                    <img src="{{ fellow.profile.avatar_url }}" class="avatar" />
+                  {% else %}
+                    <img src="{% static 'images/cf_logo.png' %}" class="avatar" />
+                  {% endif %}
+                  <p>{{ fellow.username }}</p>
+                </div>
+              </a>
+            {% endfor %}
+            <div class="row">
+              <nav class='page-nav'>
+                <ul>
+                  {% if follows.has_previous %}
+                    <li>
+                      <a href="?followed_page={{ followed_by.number }}&follows_page={{ follows.previous_page_number }}#following_section">Previous</a>
+                    </li>
+                  {% endif %}
+                  {% if follows.has_next %}
+                    <li>
+                      <a href="?followed_page={{ followed_by.number }}&follows_page={{ follows.next_page_number }}#following_section">Next</a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+      {# --------- FOLLOWERS SECTION --------- #}
+      <hr>
+      <div class="container text-center profile_container">
+        {% if followed_by %}
+          <h3 id='followed_by_section'>
+            Followers
+          </h3>
+          <h4>
+            Total Followers: {{ followed_by|length }}
+          </h4>
+          <div class="row followed_by_row">
+            {% for fellow in followed_by %}
+              <a href="{% url 'profile_other' fellow.user.username %}">
+                <div class="col-sm-2 followed_by_list">
+                  {% if fellow.avatar_url %}
+                    <img src="{{ fellow.avatar_url }}" class="avatar" />
+                  {% else %}
+                    <img src="{% static 'images/cf_logo.png' %}" class="avatar" />
+                  {% endif %}
+                  <p>
+                    {{ fellow.user.username }}
+                  </p>
+                </div>
+              </a>
+            {% endfor %}
+            <div class="row">
+              <nav class='page-nav'>
+                <ul>
+                {% if followed_by.has_previous %}
+                  <li>
+                    <a href="?followed_page={{ followed_by.previous_page_number }}&follows_page={{ follows.number }}#followed_by_section">Previous</a>
+                  </li>
+                {% endif %}
+                {% if followed_by.has_next %}
+                  <li>
+                    <a href="?followed_page={{ followed_by.next_page_number }}&follows_page={{ follows.number }}#followed_by_section">Next</a>
+                  </li>
+                {% endif %}
+                </ul>
+              </nav>
+            </div>
+          </div>
+        {% endif %}
       </div>
     </div>
-    {% endif %}
   </div>
-</div>
 {% endblock %}

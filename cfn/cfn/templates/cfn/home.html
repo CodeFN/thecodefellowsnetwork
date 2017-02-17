@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block body %}
-  <div class="container-fluid text-center handshake">
     {% if request.user.is_authenticated %}
       <div class="row content">
         <div class="container profile_info text-left white-bg">
@@ -28,13 +27,24 @@
                       <p>
                         {{ post.category }} uploaded {{ post.date_modified }}
                       </p>
+                      {% if post.url %}
+                        <p>
+                          External Link:
+                            <a href="{{ post.url }}"target="_blank">
+                              {{ post.url }}
+                            </a>
+                        </p>
+                      {% endif %}
                       {% if post.content|length > 255 %}
                           <p class='feed_content'>{{ post.content|slice:":255" }}... <a href="{% url 'post' post.id %}"> continue</a></p>
                       {% else %}    
                           <p class='feed_content'>{{ post.content }}</p>
                       {% endif %}
-                      <a href="{{ post.url }}"target="_blank">{{ post.url }}</a>
-                      <p>Comments: ({{ post.comments|length }})</p>
+                      <p>
+                        <a href="{% url 'post' post.id %}">
+                          Comments: ({{ post.comments|length }})
+                        </a>
+                      </p>
                     </div>
                   </div>
                 {% endfor %}
@@ -68,5 +78,4 @@
           </div>
         {% endif %}
       </div>
-    </div>
   {% endblock %}
