@@ -97,3 +97,40 @@ textarea, select, input {
     background-color: black;
     height: 100px;
 }
+
+html {
+    background-color: black;
+}
+
+.handshake {
+    background-image: url("/static/images/handshake.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center center; 
+    width: 100vw;
+    height: 80vh;
+    position: relative;
+
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+.login-box {
+  position: absolute;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+
+.white {
+  color: white;
+}
+
+.btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
