@@ -164,7 +164,7 @@ class FrontendTests(TestCase):
         """A user should not see follow or unfollow on their own profile."""
         self.log_in_test_user()
         response = self.client.get("/profile/", follow=True)
-        self.assertContains(response, '<button>Update Profile</button>')
+        self.assertContains(response, 'Update Profile')
 
     # Marc Tues
     def test_other_user_can_be_followed_by_user(self):
@@ -267,13 +267,13 @@ class FrontendTests(TestCase):
     def test_profile_redirects_home_for_non_user(self):
         """If you are not logged in you get redirected to home from profile."""
         response = self.client.get("/profile/", follow=True)
-        self.assertContains(response, '<h3>Log in or sign up with Github!</h3>')
+        self.assertContains(response, 'Log In / Register via Github!')
 
     # Marc Thur
     def test_other_profile_redirects_home_for_non_user(self):
         """If you are not logged in you get redirected to home from other profile."""
         response = self.client.get("/profile/" + self.users[0].username + "/", follow=True)
-        self.assertContains(response, '<h3>Log in or sign up with Github!</h3>')
+        self.assertContains(response, 'Log In / Register via Github!')
 
     def test_pagination_on_other_user_profile_works_and_handles_errors(self):
         """Pagination works on followers and handles bad input for both the profile page and other profile page, 12 users are required for pagination."""
