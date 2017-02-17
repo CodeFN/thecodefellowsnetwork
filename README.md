@@ -83,52 +83,16 @@ Set GITHUB_APP_ID and GITHUB_API_SECRET to the correct variables after signing u
 
 ###MIGRATIONS:
 
+Migrate database models for successful model rendering in your database instance.
+```bash
+./manage.py makemigrations
+./manage.py migrate
+```
 
-
-clone
-venv
-envs
-reactivate
-pip install
-createdb
-github social auth
-makemigrations
-migrate
+###RUNSERVER:
+```bash
 ./manage.py runserver
-tests
-
-architecture overview
-built with django
-app name cfn
-apps: profilecfn posts
-
-directions
-
-security, groups, assignments, direct messaging, javascript, code comparison, front end improvements
-
-
-
-
-On Linux and OSX systems:
-
-```bash
-git clone https://github.com/CodeFN/thecodefellowsnetwork.git
-python3 -m venv <env>
-source <env>/bin/activate
 ```
 
-envs
-
-```bash
-export DB_NAME=
-
-export 
-
-pip install requirements -r requirements.pip
-```
-
-
-
-
-
+##Testing
 
