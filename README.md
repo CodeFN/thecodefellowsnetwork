@@ -2,7 +2,7 @@
 # The Code Fellows Network
 The perfect network for the code academy
 
-***
+
 [![Build Status](https://travis-ci.org/CodeFN/thecodefellowsnetwork.svg?branch=master)](https://travis-ci.org/CodeFN/thecodefellowsnetwork) [![Coverage Status](https://coveralls.io/repos/github/CodeFN/thecodefellowsnetwork/badge.svg?branch=master)](https://coveralls.io/github/CodeFN/thecodefellowsnetwork?branch=master)
 
 ## Concept
