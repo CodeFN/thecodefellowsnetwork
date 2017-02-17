@@ -88,6 +88,14 @@ class FrontendTests(TestCase):
         """Log in the test user."""
         self.client.force_login(self.users[0])
 
+    @mock.patch(
+        "profile_cfn.models.github_api_call",
+        return_value=RETURNED_JSON
+    )
+    def make_more_users(self, github_api_call):
+        """Need 13 users for paginations tests."""
+        self.users = [UserFactory.create() for i in range(14)]
+
     # Ben Monday
     def test_profile_view_authenticated_returns_status_ok(self):
         """Test profile view returns status code 200."""
@@ -254,3 +262,47 @@ class FrontendTests(TestCase):
         })
         user = User.objects.first()
         self.assertTrue(user.profile.about == 'Descriptor')
+
+    # Marc Thur
+    def test_profile_redirects_home_for_non_user(self):
+        """If you are not logged in you get redirected to home from profile."""
+        response = self.client.get("/profile/", follow=True)
+        self.assertContains(response, '<h3>Log in or sign up with Github!</h3>')
+
+    # Marc Thur
+    def test_other_profile_redirects_home_for_non_user(self):
+        """If you are not logged in you get redirected to home from other profile."""
+        response = self.client.get("/profile/" + self.users[0].username + "/", follow=True)
+        self.assertContains(response, '<h3>Log in or sign up with Github!</h3>')
+
+    def test_pagination_on_other_user_profile_works_and_handles_errors(self):
+        """Pagination works on followers and handles bad input for both the profile page and other profile page, 12 users are required for pagination."""
+        self.make_more_users()
+        self.log_in_test_user()
+        self.client.post('/profile/' + self.users[1].username + '/')
+        self.client.post('/profile/' + self.users[2].username + '/')
+        self.client.post('/profile/' + self.users[3].username + '/')
+        self.client.post('/profile/' + self.users[4].username + '/')
+        self.client.post('/profile/' + self.users[5].username + '/')
+        self.client.post('/profile/' + self.users[6].username + '/')
+        self.client.post('/profile/' + self.users[7].username + '/')
+        self.client.post('/profile/' + self.users[8].username + '/')
+        self.client.post('/profile/' + self.users[9].username + '/')
+        self.client.post('/profile/' + self.users[10].username + '/')
+        self.client.post('/profile/' + self.users[11].username + '/')
+        self.client.post('/profile/' + self.users[12].username + '/')
+        self.client.post('/profile/' + self.users[13].username + '/')
+        response = self.client.get("/profile/?followed_page=1&follows_page=2")
+        self.assertTrue(response.status_code == 200)
+        response = self.client.get("/profile/?followed_page=B&follows_page=A")
+        self.assertTrue(response.status_code == 200)
+        response = self.client.get("/profile/?followed_page=4&follows_page=4")
+        self.assertTrue(response.status_code == 200)
+        self.client.get("/logout")
+        self.client.force_login(self.users[1])
+        response = self.client.get('/profile/' + self.users[0].username + '?followed_page=1&follows_page=2', follow=True)
+        self.assertTrue(response.status_code == 200)
+        response = self.client.get('/profile/' + self.users[0].username + '?followed_page=B&follows_page=A', follow=True)
+        self.assertTrue(response.status_code == 200)
+        response = self.client.get('/profile/' + self.users[0].username + '?followed_page=4&follows_page=4', follow=True)
+        self.assertTrue(response.status_code == 200)

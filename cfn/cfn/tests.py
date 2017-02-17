@@ -2,7 +2,6 @@
 from django.test import TestCase, Client, RequestFactory
 from django.contrib.auth.models import User
 import factory
-from cfn.views import HomeView
 from posts.models import Post
 import mock
 
