@@ -18,8 +18,8 @@
         <th>Category</th>
         <th>Author</th>
         <th>Posted</th>
-        <th>Content</th>
-        <th>Comments</th>
+        <th class="hide_mobile">Content</th>
+        <th class="hide_mobile">Comments</th>
       </tr>
     </thead>
     <tbody>
@@ -45,7 +45,7 @@
         <td>
           {{ post.date_uploaded|timesince }} ago
         </td>
-        <td>
+        <td class="hide_mobile">
           <a href="{% url 'post' pk=post.id %}">
             {% if post.content|length > 40 %}
               {{ post.content|slice:":40" }}...
@@ -54,7 +54,7 @@
             {% endif %}
           </a>
         </td>
-        <td>
+        <td class="hide_mobile">
           {{ post.comments.all|length }}
         </td>
       </tr>

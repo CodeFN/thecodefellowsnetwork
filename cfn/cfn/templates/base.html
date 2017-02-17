@@ -16,6 +16,8 @@
     <meta name="theme-color" content="#ffffff">
     {% block css %}{% endblock %}
   </head>
+  <body>
+  {# -------------- NAV -------------- #}
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -33,12 +35,13 @@
             <li><a href="{% url 'find_users' %}">Find Users</a></li>
             <li><a href="{% url 'posts' %}">Posts</a></li>
             <li><a href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+            <li><a href="{% url 'social:begin' 'github' %}">Login via Github</a></li>
           {% endif %}
         </ul>
       </div>
     </div>
   </nav>
-  <body>
   
       {% block body %}{% endblock %}
     </div>
