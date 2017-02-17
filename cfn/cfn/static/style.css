@@ -40,7 +40,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
 .post_section{
     background-color: black;
     border-radius: 10px;
-    padding-bottom: 1%;
+    width: 100%;
+    padding-bottom: 10px;
 }
 
 .post_list{
@@ -71,7 +72,66 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     padding-top: 2%;
 }
 
+.scrollable_feed{
+    height: 300px;
+    overflow: auto;
+    overflow-x: hidden;
+    border: 3px solid black;
+}
+
+.navbar-brand{
+    position: relative;
+    left: 8.45px;
+    bottom: 4.5px ;
+}
+
+textarea, select, input {
+    color: black;
+}
+
+.img-responsive {
+    margin-bottom: 10px;
+}
+
 .footer{
     background-color: black;
     height: 100px;
 }
+
+html {
+    background-color: black;
+}
+
+.handshake {
+    background-image: url("/static/images/handshake.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center center; 
+    width: 100vw;
+    height: 80vh;
+    position: relative;
+
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+.login-box {
+  position: absolute;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+
+.white {
+  color: white;
+}
+
+.btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+

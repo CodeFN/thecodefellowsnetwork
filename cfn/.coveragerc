@@ -15,3 +15,7 @@ omit =
 
 [report]
 show_missing = True
+
+exclude_lines =
+    def make_user_profile
+    def github_api_call

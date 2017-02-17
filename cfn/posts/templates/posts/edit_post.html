@@ -2,23 +2,27 @@
 {% block title %}Edit Post{% endblock %}
 
 {% block body %}
-<h1>Edit Post</h1>
-<form method="POST" enctype="multipart/form-data">
-{% csrf_token %}
-{% for field in form %}
-<fieldset class="control-group">
-  <label class="control-label" for="id_{{ field.name }}">
-    {{ field.label }}
-  </label>
-  <div class="controls">
-    {{ field }}
-    <p class="help-text">
-      {{ field.help_text }}
-    </p>
-  </div>
-</fieldset>
-{% endfor %}
-<input type="submit" value="Update" />
-</form>
+<div class="container ">
+  <h1>Edit Post</h1>
+  <form method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+      {% csrf_token %}
+      {% for field in form %}
+      <fieldset class="control-group">
+        <label class="control-label" for="id_{{ field.name }}">
+          {{ field.label }}
+        </label>
+        <div class="controls">
+          {{ field }}
+          <p class="help-text">
+            {{ field.help_text }}
+          </p>
+        </div>
+      </fieldset>
+      {% endfor %}
+      <input type="submit" value="< Submit />" class="btn btn-danger" />
+    </div>
+  </form>
+</div>
 
 {% endblock %}
