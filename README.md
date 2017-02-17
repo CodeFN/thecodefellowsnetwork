@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/CodeFN/thecodefellowsnetwork.svg?branch=master)](https://travis-ci.org/CodeFN/thecodefellowsnetwork) [![Coverage Status](https://coveralls.io/repos/github/CodeFN/thecodefellowsnetwork/badge.svg?branch=master)](https://coveralls.io/github/CodeFN/thecodefellowsnetwork?branch=master)
 # The Code Fellows Network
-The perfect network for the code academy: http://52.35.131.204/
+The perfect network for the code academy: codefellows.network
 
 ## Authors: 
 [Marc Fieser](https://github.com/midfies), [Ben Shields](https://github.com/iamrobinhood12345), [Ben Petty](https://github.com/benpetty)
