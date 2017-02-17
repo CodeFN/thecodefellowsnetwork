@@ -33,7 +33,7 @@ class Post(models.Model):
     def __str__(self):
         """String Representation of post."""
         return str(self.title)
-    
+
 
 class Comment(models.Model):
     """Comment class."""
@@ -54,22 +54,3 @@ class Comment(models.Model):
     def __str__(self):
         """String Representation of comment."""
         return str(self.comment)
-
-
-class Like(models.Model):
-    """Comment class."""
-
-    on_post = models.ForeignKey(
-        Post,
-        related_name='likes',
-        on_delete=models.CASCADE,
-    )
-    by_user = models.ForeignKey(
-        User,
-        related_name='likes',
-        on_delete=models.CASCADE,
-    )
-
-    def __str__(self):
-        """String Representation of like."""
-        return str('Liked by ' + self.by_user.username)

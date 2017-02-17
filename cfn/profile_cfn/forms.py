@@ -17,4 +17,4 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
 
         model = ProfileCfn
-        exclude = ['follows', 'avatar_url']
+        exclude = ['follows', 'avatar_url', 'github_url']
