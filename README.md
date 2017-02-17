@@ -9,12 +9,18 @@ The perfect network for the code academy: http://52.35.131.204/
 
 The Code Fellows Network is a social media platform designed by and for use by students of [Code Fellows](https://www.codefellows.org/). It is a social media tool to assist students in their studies as they progress through Code Fellows bootcamp. The site is designed to be easily extendable and the hope is that future classes will build upon this original project.
 
-## Requirements
+## Contents
+
+  1. Requirements
+  2. Detailed Build Instructions
+  3. Testing
+
+## 1. Requirements
 
 python3.4 or newer
 postgresql
 
-## Detailed Build Instructions
+## 2. Detailed Build Instructions
 
 This build is for Linux and OSX systems. Microsoft=unknown.
 python3.4 or newer
@@ -94,4 +100,4 @@ Migrate database models for successful model rendering in your database instance
 ./manage.py runserver
 ```
 
-##Testing
+## 3. Testing
