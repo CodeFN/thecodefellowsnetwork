@@ -105,7 +105,9 @@ Migrate database models for successful model rendering in your database instance
 cfn: main django app name
 
 cfn/cfn: main django app
+
 cfn/profile_cfn: profile/fellow app
+
 cfn/posts: posts/comments/likes app
 
 
