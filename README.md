@@ -123,5 +123,3 @@ To run
 ```bash
 ./manage.py test
 ```
-
-## 4. 
