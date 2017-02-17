@@ -30,6 +30,9 @@ ALLOWED_HOSTS = [
     '52.35.131.204',
     'localhost',
     '127.0.0.1',
+    'codefellows.network',
+    'www.codefellows.network',
+    'http://www.codefellows.network',
 ]
 
 # Application definition
