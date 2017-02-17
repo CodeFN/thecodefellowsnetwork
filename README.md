@@ -79,6 +79,11 @@ dropdb <DB_NAME>
 
 ###GITHUB SOCIAL AUTH:
 
+Set GITHUB_APP_ID and GITHUB_API_SECRET to the correct variables after signing up for social authentication through your github account. You must have a github account.
+
+###MIGRATIONS:
+
+
 
 clone
 venv
