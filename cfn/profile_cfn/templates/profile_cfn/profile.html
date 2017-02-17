@@ -63,9 +63,7 @@
       <div class="row ">
         {% for post in profile.user.posts.all|dictsortreversed:"date_modified"%}
         <div class="row post_row">
-          <div class="col-sm-2">
-          </div>
-          <div class="col-sm-8 post_list">
+          <div class="col-sm-12 post_list">
             <h3><a href="{% url 'post' post.id %}">{{ post.title }}</a></h3>
             <p>{{ post.category }} uploaded {{ post.date_modified }}</p>
             {% if post.content|length > 255 %}
