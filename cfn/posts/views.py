@@ -21,17 +21,17 @@ class PostsView(LoginRequiredMixin, ListView):
     template_name = 'posts/posts.html'
 
     def get_context_data(self):
-        """."""
+        """Get the posts."""
         all_posts = Post.objects.all().order_by('-id')
         return {'posts': all_posts}
 
     def get_queryset(self):
-        """."""
+        """Return an empty dictionary."""
         return {}
 
 
 class PostView(LoginRequiredMixin, DetailView):
-    """."""
+    """View an individual post."""
 
     login_url = '/'
     redirect_field_name = 'redirect_to'
@@ -44,7 +44,7 @@ class PostView(LoginRequiredMixin, DetailView):
         return post
 
     def get_context_data(self, **kwargs):
-        """."""
+        """Return the comment form."""
         context = super(PostView, self).get_context_data(**kwargs)
         context['form'] = CommentForm
         return context
@@ -58,7 +58,7 @@ class NewCommentView(SingleObjectMixin, FormView):
     model = Post
 
     def form_valid(self, form):
-        """."""
+        """Check if the form is valid."""
         form.instance.by_user = self.request.user
         form.instance.on_post = self.object
         form.save()
@@ -93,7 +93,7 @@ class PostWithCommentsView(View):
 
 
 class NewPostView(LoginRequiredMixin, CreateView):
-    """."""
+    """View for creating a new post."""
 
     login_url = '/'
     redirect_field_name = 'redirect_to'
@@ -103,13 +103,13 @@ class NewPostView(LoginRequiredMixin, CreateView):
     form_class = AddPostForm
 
     def form_valid(self, form):
-        """."""
+        """Check if the form is valid."""
         form.instance.author = self.request.user
         return super(NewPostView, self).form_valid(form)
 
 
 class EditPostView(LoginRequiredMixin, UpdateView):
-    """."""
+    """Edit an existing post."""
 
     login_url = '/'
     redirect_field_name = 'redirect_to'
@@ -119,14 +119,14 @@ class EditPostView(LoginRequiredMixin, UpdateView):
     form_class = EditPostForm
 
     def get_object(self, queryset=None):
-        """."""
+        """Get the post to edit."""
         post_to_edit = Post.objects.get(id=self.kwargs['pk'])
         if not post_to_edit.author == self.request.user:
             raise Http404
         return post_to_edit
 
     def form_valid(self, form):
-        """."""
+        """Check if the form is valid."""
         form.instance.author = self.request.user
         return super(EditPostView, self).form_valid(form)
 
