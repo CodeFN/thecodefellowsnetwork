@@ -5,7 +5,8 @@
 {% block css %}<link href="{% static 'style.css' %}" rel="stylesheet">{% endblock %}
 
 {% block body %}
-  <div class="container">
+<div class="row content text-center">
+  <div class="container text-left profile_info white-bg"> 
     <h2>Edit your profile</h2>
     <form method="POST" enctype="multipart/form-data">
       <div class="form-group">
@@ -27,4 +28,5 @@
       </div>
     </form>
   </div>
+</div>
 {% endblock %}
