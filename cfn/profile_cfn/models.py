@@ -41,12 +41,8 @@ def make_user_profile(sender, instance, **kwargs):
     if kwargs["created"]:
         profile = ProfileCfn(user=instance)
         try:
+            content = github_api_call(str(profile))
             json_list = []
-            client_id = os.environ.get('GITHUB_APP_ID', '')
-            client_secret = os.environ.get('GITHUB_API_SECRET', '')
-            github_api_string = 'https://api.github.com/users/' + str(profile) + '?client_id=' + client_id + '&client_secret=' + client_secret
-            req = requests.get(github_api_string)
-            content = req.content.decode('utf-8')
             json_list.append(json.loads(content))
             profile.avatar_url = json_list[0]['avatar_url']
             profile.about = json_list[0]['bio']
@@ -54,3 +50,14 @@ def make_user_profile(sender, instance, **kwargs):
         except:
             pass
         profile.save()
+
+
+def github_api_call(profile_str):
+    """Make api call to github to retrieve user data."""
+    print('api call')
+    client_id = os.environ.get('GITHUB_APP_ID', '')
+    client_secret = os.environ.get('GITHUB_API_SECRET', '')
+    github_api_string = 'https://api.github.com/users/' + profile_str + '?client_id=' + client_id + '&client_secret=' + client_secret
+    req = requests.get(github_api_string)
+    content = req.content.decode('utf-8')
+    return content

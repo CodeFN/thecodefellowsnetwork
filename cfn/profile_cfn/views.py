@@ -37,8 +37,6 @@ def ProfileView(request):
             'follows': follows,
             'followed_by': followed_by,
         })
-    else:
-        return HttpResponseRedirect('')
 
 
 @login_required
@@ -77,8 +75,6 @@ def ProfileViewOther(request, slug):
             'followed_by': followed_by,
             'user_follows': user_follows,
         })
-    else:
-        return HttpResponseRedirect('')
 
 
 class EditProfileView(LoginRequiredMixin, UpdateView):
