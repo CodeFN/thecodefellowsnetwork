@@ -58,7 +58,7 @@ class HomeViewTests(TestCase):
     def test_non_user_cannot_see_logged_in(self):
         """A non user should only see the Log in and registration."""
         response = self.client.get('/')
-        self.assertContains(response, 'Log in or sign up with Github!')
+        self.assertContains(response, 'Log In / Register via Github!')
 
     # Marc Mon
     def test_user_can_see_logged_in_home_page(self):
