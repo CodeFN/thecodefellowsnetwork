@@ -1,34 +1,37 @@
 {% extends 'base.html' %}
 {% block body %}
-  <div class="container-fluid text-center">
+  <div class="container-fluid text-center handshake">
     {% if request.user.is_authenticated %}
-      <div class="col-sm-12 text-left">
-        <p>Logged in as:
-          <a href="{% url 'profile_self' %}">{{ request.user }}</a></p>
-      </div>
       <div class="row content">
-        <div class="col-sm-2 sidenav"></div>
-        <div class="col-sm-8 text-left">
+        <div class="container profile_info text-left white-bg">
+        <p>Logged in as:
+          <a href="{% url 'profile_self' %}">{{ request.user }}</a>
+        </p>
           <h1>The Code Fellows Network</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident.</p>
+          <p>Welcome to The Code Fellows Network, the  professional networking site exclusively built for Code Fellows students and alumni.</p>
           {% if feed_posts|length > 0 %}
-          <h3>Lastest Updates</h3>
+          {# -------- FEED SECTION -------- #}
+          <h3>Latest Updates</h3>
+          <h4>From Your Network:</h4>
             <div class="container text-center post_section scrollable_feed">
-              <div class="row ">
+              <div class="row">
                 {% for post in feed_posts %}
                   <div class="row post_row">
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-8 post_list">
-                      <h3>{{ post.title }}</h3>
-                      <h6>Uploaded by: {{ post.author }}</h6>
+                    <div class="col-sm-12 post_list">
+                      <h3>
+                        <a href="{% url 'post' post.id %}">{{ post.title }}</a>
+                      </h3>
+                      <h6>Uploaded by: 
+                      <a href="{% url 'profile_other' post.author.username %}">
+                        {{ post.author }}</a>
+                      </h6>
                       <p>{{ post.category }} uploaded {{ post.date_modified }}</p>
                       {% if post.content|length > 255 %}
                           <p class='feed_content'>{{ post.content|slice:":255" }}... <a href="{% url 'post' post.id %}"> continue</a></p>
                       {% else %}    
                           <p class='feed_content'>{{ post.content }}</p>
                       {% endif %}
-                      <a href="{{ post.url }}"target="_blank">{{ post.url }}</a><br><a href="{% url 'post' post.id %}">To Post</a>
-                      
+                      <a href="{{ post.url }}"target="_blank">{{ post.url }}</a>
                     </div>
                   </div>
                 {% endfor %}
@@ -45,7 +48,7 @@
           <hr>
         </div>
       {% else %}
-        <div class="row content daddy">
+        <div class="row content">
           <div class="container handshake">
             <div class="login-box">
               <h3 class="white">Welcome to the Code Fellows Network</h3>

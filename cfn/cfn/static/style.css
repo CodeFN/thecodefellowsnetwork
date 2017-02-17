@@ -31,7 +31,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     margin-bottom: 1%;
     background-color: black;
     padding: 1%;
-  
+    margin-right: 0px;
+
 }
 
 #post_section{
@@ -56,8 +57,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
 }
 
 .followed_by_list, .following_list{
-    border: 1px solid white;
     padding: 1%;
+    width: 120px;
+    display: inline-block;
+    text-align: center;
 }
 
 
@@ -135,3 +138,11 @@ html {
     margin-bottom: 10px;
 }
 
+.avatar {
+    width: 100px;
+    height: 100px;
+}
+
+.white-bg {
+    background-color: white;
+}
