@@ -388,5 +388,30 @@ class FrontEndTests(TestCase):
         this_comment.by_user = this_user
         this_comment.on_post = this_post
         this_comment.save()
-        response = self.client.post('/profile/')
+        response = self.client.get('/profile/')
         self.assertContains(response, 'Comments: (2)')
+
+    # Benny
+    def test_comment_length_render_on_other_user_profile(self):
+        """Test comment length render on profile post."""
+        this_user = self.users[0]
+        this_post = Post()
+        this_post.author = this_user
+        this_post.save()
+        this_comment = Comment()
+        this_comment.by_user = this_user
+        this_comment.on_post = this_post
+        this_comment.save()
+        this_comment = Comment()
+        this_comment.by_user = this_user
+        this_comment.on_post = this_post
+        this_comment.save()
+        this_comment = Comment()
+        this_comment.by_user = this_user
+        this_comment.on_post = this_post
+        this_comment.save()
+        self.client.force_login(self.users[1])
+        response = self.client.get(
+            '/profile/' + str(this_user.username),
+            follow=True)
+        self.assertContains(response, 'Comments: (3)')
