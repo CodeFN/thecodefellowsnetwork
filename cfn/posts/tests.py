@@ -2,7 +2,7 @@
 
 from django.test import TestCase, Client, RequestFactory
 from django.contrib.auth.models import User
-from posts.models import Post
+from posts.models import Post, Comment
 import factory
 
 import mock
@@ -45,6 +45,7 @@ class BackendTests(TestCase):
             self.posts[i].title = factory.Sequence(
                 lambda n: "Post{}".format(n))
             self.posts[i].save()
+        self.comments = [Comment() for i in range(5)]
 
     # Ben Wednesday
     def test_posts_exist(self):
@@ -71,6 +72,25 @@ class BackendTests(TestCase):
         file_name = 'image.jpg'
         assert image_path(
             instance, file_name) == 'posts/images/1_image.jpg'
+
+    # Benny
+    def test_post_model_returns_string(self):
+        """Test the post model has string function."""
+        instance = Post()
+        instance.title = 'title'
+        assert str(instance) == 'title'
+
+    # Benny
+    def test_comment_model_returns_string(self):
+        """Test the post model has string function."""
+        instance = Comment()
+        instance.comment = 'comment'
+        assert str(instance) == 'comment'
+
+    # Benny
+    def test_comment(self):
+        """."""
+        pass
 
 
 class FrontEndTests(TestCase):
@@ -357,3 +377,23 @@ class FrontEndTests(TestCase):
         this_post.save()
         response = self.client.get('/posts/' + str(this_post.id), follow=True)
         self.assertTrue(response.status_code == 200)
+
+    # Benny
+    def test_comment_content_renders_on_posts_view(self):
+        """Test post view returns status code 200."""
+        this_user = self.users[0]
+        self.client.force_login(this_user)
+        this_post = Post()
+        this_post.author = this_user
+        this_post.content = 'tornado fire crocodile'
+        this_post.title = 'marc ben benny built this site'
+        this_post.save()
+        this_comment = Comment()
+        this_comment.by_user = this_user
+        this_comment.on_post = this_post
+        this_comment.comment = 'this comment'
+        this_comment.save()
+        response = self.client.post(
+            '/posts/' + str(this_post.id), follow=True,
+            comment='yo')
+        self.assertContains(response, 'this comment')
