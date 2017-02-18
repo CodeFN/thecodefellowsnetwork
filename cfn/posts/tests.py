@@ -415,3 +415,26 @@ class FrontEndTests(TestCase):
             '/profile/' + str(this_user.username),
             follow=True)
         self.assertContains(response, 'Comments: (3)')
+
+    # Benny
+    def test_posts_view_preview(self):
+        """A post of more than 40 chars is shortened."""
+        this_user = self.users[0]
+        this_post = Post()
+        this_post.author = this_user
+        this_post.content = (
+            '11111111111111111111' +
+            '11111111111111111111' +
+            '11111111111111111111')
+        this_post.title = 'marc ben benny built this site'
+        this_post.save()
+        self.client.force_login(self.users[1])
+        response = self.client.get(
+            '/posts/',
+            follow=True)
+        self.assertContains(
+            response,
+            ('11111111111111111111' +
+             '11111111111111111111' +
+             '...')
+        )

@@ -349,6 +349,7 @@ class FrontendTests(TestCase):
             '?followed_page=4&follows_page=4', follow=True)
         self.assertTrue(response.status_code == 200)
 
+    # Benny
     def test_find_users_shows_correct_count_minus_admin(self):
         """Test find users tally subtracts 1 for admin."""
         response = self.client.get(
