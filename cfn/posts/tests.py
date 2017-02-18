@@ -380,7 +380,7 @@ class FrontEndTests(TestCase):
 
     # Benny
     def test_comment_content_renders_on_posts_view(self):
-        """Test post view returns status code 200."""
+        """Test comment comntent is in post request."""
         this_user = self.users[0]
         self.client.force_login(this_user)
         this_post = Post()
@@ -394,6 +394,21 @@ class FrontEndTests(TestCase):
         this_comment.comment = 'this comment'
         this_comment.save()
         response = self.client.post(
+            '/posts/' + str(this_post.id), follow=True)
+        self.assertContains(response, 'this comment')
+
+    # Benny
+    def test_comment_when_not_logged_in(self):
+        """Should return Forbidden Status Code."""
+        this_user = self.users[0]
+        this_post = Post()
+        this_post.author = this_user
+        this_post.save()
+        this_comment = Comment()
+        this_comment.by_user = this_user
+        this_comment.on_post = this_post
+        this_comment.save()
+        response = self.client.post(
             '/posts/' + str(this_post.id), follow=True,
             comment='yo')
-        self.assertContains(response, 'this comment')
+        self.assertTrue(response.status_code == 403)
