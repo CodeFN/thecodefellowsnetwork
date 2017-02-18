@@ -341,3 +341,18 @@ class FrontEndTests(TestCase):
         this_post.save()
         response = self.client.post('/posts/' + str(this_post.id) + '/edit')
         self.assertTrue(response.status_code == 404)
+
+    # Benny
+    def test_posts_render_on_profile(self):
+        """Test profile view response content contains post content."""
+        this_user = self.users[0]
+        this_post = Post()
+        this_post.author = this_user
+        this_post.content = 'tornado fire crocodile'
+        this_post.title = 'marc ben benny built this site'
+        this_post.save()
+        self.client.force_login(this_user)
+        response = self.client.get(
+            '/profile/',
+            follow=True)
+        self.assertContains(response, 'tornado fire crocodile')
