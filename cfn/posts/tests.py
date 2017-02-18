@@ -330,3 +330,14 @@ class FrontEndTests(TestCase):
         this_post.save()
         response = self.client.post('/posts/' + str(this_post.id) + '/delete')
         self.assertTrue(response.status_code == 404)
+
+    # Benny
+    def test_post_edit_wrong_user(self):
+        """Test post edit wrong user returns 404."""
+        this_user = self.users[0]
+        self.client.force_login(this_user)
+        this_post = Post()
+        this_post.author = self.users[1]
+        this_post.save()
+        response = self.client.post('/posts/' + str(this_post.id) + '/edit')
+        self.assertTrue(response.status_code == 404)
