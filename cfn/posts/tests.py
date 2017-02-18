@@ -42,7 +42,8 @@ class BackendTests(TestCase):
         self.posts = [Post() for i in range(5)]
         for i in range(len(self.posts)):
             self.posts[i].author = self.users[i]
-            self.posts[i].title = factory.Sequence(lambda n: "Post{}".format(n))
+            self.posts[i].title = factory.Sequence(
+                lambda n: "Post{}".format(n))
             self.posts[i].save()
 
     # Ben Wednesday
@@ -60,6 +61,16 @@ class BackendTests(TestCase):
     def test_post_has_title(self):
         """Test post title attributed."""
         self.assertTrue(self.posts[0].title)
+
+    # Benny
+    def test_image_path_returns_correct_string(self):
+        """Test the image path function for a proper return."""
+        from posts.models import image_path, Post
+        instance = Post()
+        instance.image.id = 1
+        file_name = 'image.jpg'
+        assert image_path(
+            instance, file_name) == 'posts/images/1_image.jpg'
 
 
 class FrontEndTests(TestCase):
@@ -88,12 +99,14 @@ class FrontEndTests(TestCase):
 
     # Ben Wednesday
     def test_other_user_post_view_authenticated_user_returns_status_ok(self):
-        """Test other post view with authenticated client returns status code 200."""
+        """Test other post view with authenticated client...
+
+        ...returns status code 200.
+        """
         this_user = self.users[0]
         this_post = Post()
         this_post.author = this_user
         this_post.save()
-        other_user = self.users[1]
         self.client.force_login(this_user)
         response = self.client.get('/posts/' + str(this_post.id), follow=True)
         self.assertTrue(response.status_code == 200)
@@ -239,7 +252,10 @@ class FrontEndTests(TestCase):
 
     # Benny
     def test_edited_post_content_renders_on_post_view(self):
-        """Test other post view with authenticated client returns status code 200."""
+        """Test other post view with authenticated client...
+
+        ...returns status code 200.
+        """
         this_user = self.users[0]
         self.client.force_login(this_user)
         this_post = Post()
@@ -272,7 +288,10 @@ class FrontEndTests(TestCase):
 
     # Benny
     def test_post_content_renders_on_post_view(self):
-        """Test other post view with authenticated client returns status code 200."""
+        """Test other post view with authenticated client...
+
+        ...returns status code 200.
+        """
         this_user = self.users[0]
         self.client.force_login(this_user)
         this_post = Post()
@@ -305,7 +324,10 @@ class FrontEndTests(TestCase):
 
     # Benny
     def test_edited_post_content_renders_on_post(self):
-        """Test other post view with authenticated client returns status code 200."""
+        """Test other post view with authenticated client...
+
+        ...returns status code 200.
+        """
         this_user = self.users[0]
         self.client.force_login(this_user)
         this_post = Post()
