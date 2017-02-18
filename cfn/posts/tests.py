@@ -1,12 +1,12 @@
 """Posts tests."""
 
-from django.test import TestCase, Client, RequestFactory
-from django.contrib.auth.models import User
-from posts.models import Post, Comment
 import factory
-
 import mock
 
+from django.test import TestCase, Client, RequestFactory
+from django.contrib.auth.models import User
+
+from posts.models import Post, Comment
 
 RETURNED_JSON = """{
   "avatar_url": "https://avatars.githubusercontent.com/u/11498059?v=3",
@@ -271,114 +271,6 @@ class FrontEndTests(TestCase):
         self.assertContains(response, 'marc ben benny built this site')
 
     # Benny
-    def test_edited_post_content_renders_on_post_view(self):
-        """Test other post view with authenticated client...
-
-        ...returns status code 200.
-        """
-        this_user = self.users[0]
-        self.client.force_login(this_user)
-        this_post = Post()
-        this_post.author = this_user
-        this_post.save()
-        response = self.client.get('/posts/' + str(this_post.id), follow=True)
-        self.assertTrue(response.status_code == 200)
-
-    # Benny
-    def test_edited_post_content_renders_on_posts_view(self):
-        """Test post view returns status code 200."""
-        this_user = self.users[0]
-        self.client.force_login(this_user)
-        this_post = Post()
-        this_post.author = this_user
-        this_post.save()
-        response = self.client.get('/posts/' + str(this_post.id), follow=True)
-        self.assertTrue(response.status_code == 200)
-
-    # Benny
-    def test_edited_post_content_renders_on_profile_view(self):
-        """Test post view returns status code 200."""
-        this_user = self.users[0]
-        self.client.force_login(this_user)
-        this_post = Post()
-        this_post.author = this_user
-        this_post.save()
-        response = self.client.get('/posts/' + str(this_post.id), follow=True)
-        self.assertTrue(response.status_code == 200)
-
-    # Benny
-    def test_post_content_renders_on_post_view(self):
-        """Test other post view with authenticated client...
-
-        ...returns status code 200.
-        """
-        this_user = self.users[0]
-        self.client.force_login(this_user)
-        this_post = Post()
-        this_post.author = this_user
-        this_post.save()
-        response = self.client.get('/posts/' + str(this_post.id), follow=True)
-        self.assertTrue(response.status_code == 200)
-
-    # Benny
-    def test_post_content_renders_on_posts_view(self):
-        """Test post view returns status code 200."""
-        this_user = self.users[0]
-        self.client.force_login(this_user)
-        this_post = Post()
-        this_post.author = this_user
-        this_post.save()
-        response = self.client.get('/posts/' + str(this_post.id), follow=True)
-        self.assertTrue(response.status_code == 200)
-
-    # Benny
-    def test_post_content_renders_on_profile_view(self):
-        """Test post view returns status code 200."""
-        this_user = self.users[0]
-        self.client.force_login(this_user)
-        this_post = Post()
-        this_post.author = this_user
-        this_post.save()
-        response = self.client.get('/posts/' + str(this_post.id), follow=True)
-        self.assertTrue(response.status_code == 200)
-
-    # Benny
-    def test_edited_post_content_renders_on_post(self):
-        """Test other post view with authenticated client...
-
-        ...returns status code 200.
-        """
-        this_user = self.users[0]
-        self.client.force_login(this_user)
-        this_post = Post()
-        this_post.author = this_user
-        this_post.save()
-        response = self.client.get('/posts/' + str(this_post.id), follow=True)
-        self.assertTrue(response.status_code == 200)
-
-    # Benny
-    def test_edited_post_content_renders_on_posts(self):
-        """Test post view returns status code 200."""
-        this_user = self.users[0]
-        self.client.force_login(this_user)
-        this_post = Post()
-        this_post.author = this_user
-        this_post.save()
-        response = self.client.get('/posts/' + str(this_post.id), follow=True)
-        self.assertTrue(response.status_code == 200)
-
-    # Benny
-    def test_edited_post_content_renders_on_profile(self):
-        """Test post view returns status code 200."""
-        this_user = self.users[0]
-        self.client.force_login(this_user)
-        this_post = Post()
-        this_post.author = this_user
-        this_post.save()
-        response = self.client.get('/posts/' + str(this_post.id), follow=True)
-        self.assertTrue(response.status_code == 200)
-
-    # Benny
     def test_comment_content_renders_on_posts_view(self):
         """Test comment comntent is in post request."""
         this_user = self.users[0]
@@ -412,3 +304,29 @@ class FrontEndTests(TestCase):
             '/posts/' + str(this_post.id), follow=True,
             comment='yo')
         self.assertTrue(response.status_code == 403)
+
+    # Benny
+    def test_post_comment_200(self):
+        """Test post comment view returns status code 200."""
+        this_user = self.users[0]
+        self.client.force_login(this_user)
+        this_post = Post()
+        this_post.author = this_user
+        this_post.save()
+        this_comment = Comment()
+        this_comment.by_user = this_user
+        this_comment.on_post = this_post
+        this_comment.save()
+        response = self.client.post('/posts/' + str(this_post.id))
+        self.assertTrue(response.status_code == 200)
+
+    # Benny
+    def test_post_delete_wrong_user(self):
+        """Test post delete wrong user returns 404."""
+        this_user = self.users[0]
+        self.client.force_login(this_user)
+        this_post = Post()
+        this_post.author = self.users[1]
+        this_post.save()
+        response = self.client.post('/posts/' + str(this_post.id) + '/delete')
+        self.assertTrue(response.status_code == 404)
