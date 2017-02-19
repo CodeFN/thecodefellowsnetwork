@@ -7,12 +7,12 @@
     {% if profile.user in user_follows %}
       <form action='' method='POST'>
         {% csrf_token %}
-        <button class="btn btn-md btn-danger" type="submit" name="unfollow">&#60; Unfollow /&#62;</button>
+        <button id="unfollow-button" class="btn btn-md btn-danger" type="submit" name="unfollow">&#60; Unfollow /&#62;</button>
       </form>
     {% else %}
       <form action='' method='POST'>
         {% csrf_token %}
-        <button class="btn btn-md btn-danger" type="submit" name="follow">&#60; Follow /&#62;</button>
+        <button id="unfollow-button" class="btn btn-md btn-danger" type="submit" name="follow">&#60; Follow /&#62;</button>
       </form>
     {% endif %}
   {# ------ UPDATE YOUR OWN PROFILE BUTTON ------- #}

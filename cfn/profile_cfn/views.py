@@ -68,7 +68,6 @@ def ProfileViewOther(request, slug):
                 request.user.profile.follows.remove(to_follow)
             else:
                 request.user.profile.follows.add(to_follow)
-            return HttpResponseRedirect("/profile/" + slug)
         return render(request, "profile_cfn/profile.html", {
             'profile': profile,
             'follows': follows,
