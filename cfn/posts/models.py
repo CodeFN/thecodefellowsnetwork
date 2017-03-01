@@ -22,6 +22,7 @@ class Post(models.Model):
         ('Note', 'Note'),
         ('Project', 'Project'),
         ('Link', 'Link'),
+        ('Job', 'Job'),
     )
     category = models.CharField(max_length=75, choices=CHOICE_CATEGORY)
     content = models.TextField(max_length=15000)
