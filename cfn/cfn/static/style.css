@@ -1,5 +1,13 @@
 body{
-    background-color: white;
+    background-image: url("/static/images/handshake.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center center; 
+    width: 100vw;
+    height: 80vh;
+    position: relative;
 }
 
 .homebox{
@@ -25,7 +33,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     color: black;
 }
 
-.followed_by_row, .following_row{
+.followed_by_row, .following_row {
     border-left: 1px solid black;
     border-radius: 10px;
     margin-bottom: 1%;
@@ -58,7 +66,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
 
 .followed_by_list, .following_list{
     padding: 1%;
-    width: 120px;
     display: inline-block;
     text-align: center;
 }
@@ -105,19 +112,6 @@ html {
     background-color: black;
 }
 
-.handshake {
-    background-image: url("/static/images/handshake.jpg");
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-position: center center; 
-    width: 100vw;
-    height: 80vh;
-    position: relative;
-
-}
-
 .navbar {
     margin-bottom: 0px;
 }
@@ -152,6 +146,35 @@ html {
         display: none;
     }
     h1 {
-        font-size: 35px;
+        font-size: 25px;
     }
+}
+
+.container, hr {
+    width: 90%;
+}
+
+li {
+    list-style: none;
+}
+
+footer {
+    padding: 5%;
+}
+
+.handshake {
+    background-image: url("/static/images/handshake.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center center; 
+    width: 100vw;
+    height: 80vh;
+    position: relative;
+    text-align: center;
+}
+
+.img-responsive {
+    width: 100%;
 }
