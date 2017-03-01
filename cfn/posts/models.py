@@ -30,6 +30,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='image_path', null=True, blank=True)
     date_uploaded = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+    datetime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         """String Representation of post."""
