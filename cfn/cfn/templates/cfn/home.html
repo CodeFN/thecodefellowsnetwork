@@ -6,6 +6,9 @@
         <p>Logged in as:
           <a href="{% url 'profile_self' %}">{{ request.user }}</a>
         </p>
+        {% if debug %}
+        <h1>Debug is True!</h1>
+        {% endif %}
           <h1>The Code Fellows Network</h1>
           <p>Welcome to The Code Fellows Network, the  professional networking site exclusively built for Code Fellows students and alumni.</p>
           {% if feed_posts|length > 0 %}
