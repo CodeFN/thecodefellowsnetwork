@@ -33,6 +33,8 @@ ALLOWED_HOSTS = [
     'codefellows.network',
     'www.codefellows.network',
     'http://www.codefellows.network',
+    '52.35.35.64',
+    'ec2-52-35-35-64.us-west-2.compute.amazonaws.com',
 ]
 
 # Application definition

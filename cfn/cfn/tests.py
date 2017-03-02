@@ -11,7 +11,11 @@ RETURNED_JSON = """{
   "bio": "I move fast and break my computer.",
 }"""
 
-LONG_MESSAGE = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,."
+LONG_MESSAGE = ("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. " +
+                "Aenean commodo ligula eget dolor. Aenean massa. Cum " +
+                "sociis natoque penatibus et magnis dis parturient montes, " +
+                "nascetur ridiculus mus. Donec quam felis, ultricies nec, " +
+                "pellentesque eu, pretium quis,.")
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -120,9 +124,14 @@ class HomeViewTests(TestCase):
         self.client.force_login(test_user)
         test_user2 = self.users[1]
         self.client.post('/profile/' + test_user2.username + '/')
-        post = Post(author=test_user2, title="TestPost", content='Short Message')
+        post = Post(
+            author=test_user2, title="TestPost", content='Short Message')
         post.save()
         response = self.client.get('/')
         self.assertNotContains(response, '> continue</a>')
 
-
+    # Benny
+    def test_about_page_returns_200(self):
+        """Test that founder page url is correct."""
+        response = self.client.get('/about/')
+        self.assertTrue(response.status_code == 200)

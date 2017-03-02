@@ -53,18 +53,22 @@ class BackendTests(TestCase):
         username = self.users[0].username
         self.assertTrue(profile.user.username == username)
 
+    # Benny
     def test_profile_model_returns_string(self):
         """Test that user model returns string for Py2 compatibility."""
         assert type(str(self.users[0])) == str
 
+    # Benny
     def test_profile_model_returns_string_part_2(self):
         """Test that user model returns string for Py2 compatibility."""
         assert type(str(self.users[0])) == str
 
+    # Benny
     def test_profile_model_returns_is_active(self):
         """Test that user model returns bool on is_active."""
         assert type((ProfileCfn.objects.first().is_active)) == bool
 
+    # Benny
     def test_inactive_profile_model_user_is_inactive(self):
         """Test that user profile model is inactive by default."""
         assert type((ProfileCfn.objects.first().is_active)) == bool
@@ -81,7 +85,8 @@ class FrontendTests(TestCase):
         """Set up for frontend fest runner."""
         self.client = Client()
         self.request = RequestFactory()
-        self.photo = SimpleUploadedFile('test.jpg', open('cfn/static/images/cf_logo.png', 'rb').read())
+        self.photo = SimpleUploadedFile('test.jpg', open(
+            'cfn/static/images/cf_logo.png', 'rb').read())
         self.users = [UserFactory.create() for i in range(5)]
 
     def log_in_test_user(self):
@@ -105,13 +110,19 @@ class FrontendTests(TestCase):
 
     # Ben Monday
     def test_profile_view_unauthenticated_returns_status_redirect(self):
-        """Test profile view with unauthenticated client returns status code 302."""
+        """Test profile view with unauthenticated client...
+
+        ...returns status code 302.
+        """
         response = self.client.get("/profile/")
         self.assertTrue(response.status_code == 302)
 
     # Ben Monday
     def test_other_profile_view_authenticated_returns_status_ok(self):
-        """Test other profile view with authenticated client returns status code 200."""
+        """Test other profile view with authenticated client...
+
+        ...returns status code 200.
+        """
         self.log_in_test_user()
         new_user = self.users[1]
         response = self.client.get(
@@ -120,20 +131,29 @@ class FrontendTests(TestCase):
 
     # Ben Monday
     def test_other_profile_view_unauthenticated_returns_status_redirect(self):
-        """Test other profile view with unauthenticated client returns status code 301."""
+        """Test other profile view with unauthenticated client...
+
+        ...returns status code 301.
+        """
         response = self.client.get("/profile/test_user")
         self.assertTrue(response.status_code == 301)
 
     # Ben Monday
     def test_no_profile_authenticated_returns_status_not_found(self):
-        """Test non-existing profile view with unauthenticated client returns status code 302."""
+        """Test non-existing profile view with unauthenticated client...
+
+        ...returns status code 302.
+        """
         self.log_in_test_user()
         response = self.client.get("/profile/abcdefg")
         self.assertTrue(response.status_code == 301)
 
     # Ben Monday
     def test_no_profile_unauthenticated_returns_status_redirect(self):
-        """Test non-existing profile view with unauthenticated client returns status code 302."""
+        """Test non-existing profile view with unauthenticated client...
+
+        ...returns status code 302.
+        """
         response = self.client.get("/profile/abcdefg")
         self.assertTrue(response.status_code == 301)
 
@@ -150,14 +170,18 @@ class FrontendTests(TestCase):
         """A user should not see follow or unfollow on their own profile."""
         self.log_in_test_user()
         response = self.client.get("/profile/", follow=True)
-        self.assertNotContains(response, '<button type="submit" name="unfollow">Unfollow</button>')
+        self.assertNotContains(
+            response,
+            '<button type="submit" name="unfollow">Unfollow</button>')
 
     # Marc Tues
     def test_user_does_not_have_option_to_unfollow_themselves(self):
         """A user should not see unfollow on their own profile."""
         self.log_in_test_user()
         response = self.client.get("/profile/", follow=True)
-        self.assertNotContains(response, '<button type="submit" name="follow">Follow</button>')
+        self.assertNotContains(
+            response,
+            '<button type="submit" name="follow">Follow</button>')
 
     # Marc Tues
     def test_user_can_view_profile_button_on_their_profile(self):
@@ -195,8 +219,10 @@ class FrontendTests(TestCase):
         test_user = self.users[0]
         self.log_in_test_user()
         test_user2 = self.users[1]
-        self.client.post('/profile/' + test_user2.username + '/')  # <-- Follow
-        self.client.post('/profile/' + test_user2.username + '/')  # <-- Unfollow
+        self.client.post(
+            '/profile/' + test_user2.username + '/')  # <-- Follow
+        self.client.post(
+            '/profile/' + test_user2.username + '/')  # <-- Unfollow
         self.assertTrue(test_user.profile not in test_user2.followed_by.all())
 
     # Marc Tues
@@ -205,8 +231,10 @@ class FrontendTests(TestCase):
         test_user = self.users[0]
         self.log_in_test_user()
         test_user2 = self.users[1]
-        self.client.post('/profile/' + test_user2.username + '/')  # <-- Follow
-        self.client.post('/profile/' + test_user2.username + '/')  # <-- Unfollow
+        self.client.post(
+            '/profile/' + test_user2.username + '/')  # <-- Follow
+        self.client.post(
+            '/profile/' + test_user2.username + '/')  # <-- Unfollow
         self.assertTrue(test_user2 not in test_user.profile.follows.all())
 
     # Marc Tues
@@ -271,12 +299,20 @@ class FrontendTests(TestCase):
 
     # Marc Thur
     def test_other_profile_redirects_home_for_non_user(self):
-        """If you are not logged in you get redirected to home from other profile."""
-        response = self.client.get("/profile/" + self.users[0].username + "/", follow=True)
+        """If you are not logged in...
+
+        ...you get redirected to home from other profile.
+        """
+        response = self.client.get(
+            "/profile/" + self.users[0].username + "/", follow=True)
         self.assertContains(response, 'Log In / Register via Github!')
 
     def test_pagination_on_other_user_profile_works_and_handles_errors(self):
-        """Pagination works on followers and handles bad input for both the profile page and other profile page, 12 users are required for pagination."""
+        """Pagination works on followers...
+
+        ...and handles bad input for both the profile page
+        and other profile page, 12 users are required for pagination.
+        """
         self.make_more_users()
         self.log_in_test_user()
         self.client.post('/profile/' + self.users[1].username + '/')
@@ -300,9 +336,22 @@ class FrontendTests(TestCase):
         self.assertTrue(response.status_code == 200)
         self.client.get("/logout")
         self.client.force_login(self.users[1])
-        response = self.client.get('/profile/' + self.users[0].username + '?followed_page=1&follows_page=2', follow=True)
+        response = self.client.get(
+            '/profile/' + self.users[0].username +
+            '?followed_page=1&follows_page=2', follow=True)
         self.assertTrue(response.status_code == 200)
-        response = self.client.get('/profile/' + self.users[0].username + '?followed_page=B&follows_page=A', follow=True)
+        response = self.client.get(
+            '/profile/' + self.users[0].username +
+            '?followed_page=B&follows_page=A', follow=True)
         self.assertTrue(response.status_code == 200)
-        response = self.client.get('/profile/' + self.users[0].username + '?followed_page=4&follows_page=4', follow=True)
+        response = self.client.get(
+            '/profile/' + self.users[0].username +
+            '?followed_page=4&follows_page=4', follow=True)
         self.assertTrue(response.status_code == 200)
+
+    # Benny
+    def test_find_users_shows_correct_count_minus_admin(self):
+        """Test find users tally subtracts 1 for admin."""
+        response = self.client.get(
+            '/find/users/', follow=True)
+        self.assertContains(response, 'Total Users: 4')

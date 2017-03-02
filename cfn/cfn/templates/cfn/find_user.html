@@ -7,11 +7,10 @@
         Fellows
       </h3>
       <h4>
-        Total Users: {{ fellows|length }}
+        Total Users: {{ fellows|length|add:"-1" }}
       </h4>
       <div class="row following_row">
         {% for fellow in fellows %}
-          {% if fellow.username != request.user.username %}
             {% if fellow.username != 'admin' %}
               <a href="{% url 'profile_other' fellow.username %}">
                 <div class="col-sm-2 following_list">
@@ -23,7 +22,6 @@
                   <p>{{ fellow.username }}</p>
                 </div>
               </a>
-            {% endif %}
           {% endif %}
         {% endfor %}
       </div>
