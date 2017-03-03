@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from model_utils.managers import InheritanceManager
 
 
 def image_path(instance, file_name):
@@ -18,12 +19,7 @@ class Post(models.Model):
         on_delete=models.CASCADE,
     )
     title = models.CharField(max_length=255)
-    CHOICE_CATEGORY = (
-        ('Note', 'Note'),
-        ('Project', 'Project'),
-        ('Link', 'Link'),
-    )
-    category = models.CharField(max_length=75, choices=CHOICE_CATEGORY)
+    category = models.CharField(max_length=75, default='Note')
     content = models.TextField(max_length=15000)
     url = models.URLField(max_length=200, null=True, blank=True)
     image = models.ImageField(upload_to='image_path', null=True, blank=True)
@@ -33,6 +29,18 @@ class Post(models.Model):
     def __str__(self):
         """String Representation of post."""
         return str(self.title)
+
+    objects = InheritanceManager()
+
+
+class Idea(Post):
+    """An idea."""
+
+    test = models.CharField(max_length=10, default='testField')
+
+    def save(self, *args, **kwargs):
+        self.category = 'Idea'
+        super(Idea, self).save(*args, **kwargs)
 
 
 class Comment(models.Model):

@@ -19,3 +19,9 @@ show_missing = True
 exclude_lines =
     def make_user_profile
     def github_api_call
+    class NewCommentView
+    class PostWithCommentsView
+    class DeletePostView
+    class EditPostView
+    class NewPostView
+    class Post

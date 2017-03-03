@@ -20,6 +20,16 @@
                       <h3>
                         <a href="{% url 'post' post.id %}">{{ post.title }}</a>
                       </h3>
+
+
+
+                      {% if post.category == 'Idea'%}
+                        <h3> {{ post.test }}</h3>
+                      {% endif %}
+
+
+
+                      
                       <h6>Uploaded by: 
                       <a href="{% url 'profile_other' post.author.username %}">
                         {{ post.author }}</a>

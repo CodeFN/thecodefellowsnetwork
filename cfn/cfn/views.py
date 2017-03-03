@@ -13,9 +13,9 @@ class HomeView(TemplateView):
         """Get the posts of all users followed by logged in user."""
         if self.request.user.is_authenticated:
             the_followed = self.request.user.profile.follows.all()
-            feed_posts = Post.objects.filter(author=self.request.user)
+            feed_posts = Post.objects.filter(author=self.request.user).select_subclasses()
             for fellow in the_followed:
-                fellow_posts = fellow.posts.all()
+                fellow_posts = fellow.posts.select_subclasses()
                 feed_posts = feed_posts | fellow_posts
             feed_posts = feed_posts.order_by('date_modified').reverse()
             return {'feed_posts': feed_posts}
