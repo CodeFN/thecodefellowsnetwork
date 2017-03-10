@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile{% endblock %}
+{% load static %}
+{% block css %}<link href="{% static 'style.css' %}" rel="stylesheet">{% endblock %}
+
+{% block body %}
+<div class="row content text-center">
+  <div class="container text-left profile_info white-bg"> 
+    <h2>Edit your profile</h2>
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        {% csrf_token %}
+        {% for field in form %}
+        <fieldset class="control-group">
+          <label class="control-label" for="id_{{ field.name }}">
+            {{ field.label }}
+          </label>
+          <div class="controls">
+            {{ field }}
+            <p class="help-text">
+              {{ field.help_text }}
+            </p>
+          </div>
+        </fieldset>
+        {% endfor %}
+        <input type="submit" value="< Submit />" class="btn btn-danger" />
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+
+{% extends 'base.html' %}
+{% block title %}New Post{% endblock %}
+
+{% block body %}
+<div class="row content text-center">
+  <div class="container text-left profile_info white-bg"> 
+    <h1>New Post</h1>
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        {% csrf_token %}
+        {% for field in form %}
+        <fieldset class="control-group">
+          <label class="control-label" for="id_{{ field.name }}">
+            {{ field.label }}
+          </label>
+          <div class="controls">
+            {{ field }}
+            <p class="help-text">
+              {{ field.help_text }}
+            </p>
+          </div>
+        </fieldset>
+        {% endfor %}
+        <button type="submit" class="btn btn-danger">
+          &#60; Submit /&#62;
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+
+ extends 'base.html' %}
+{% block title %}Edit Post{% endblock %}
+
+{% block body %}
+<div class="row content text-center">
+  <div class="container text-left profile_info white-bg"> 
+    <h1>Edit Post</h1>
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        {% csrf_token %}
+        {% for field in form %}
+        <fieldset class="control-group">
+          <label class="control-label" for="id_{{ field.name }}">
+            {{ field.label }}
+          </label>
+          <div class="controls">
+            {{ field }}
+            <p class="help-text">
+              {{ field.help_text }}
+            </p>
+          </div>
+        </fieldset>
+        {% endfor %}
+        <input type="submit" value="< Submit />" class="btn btn-danger" />
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
