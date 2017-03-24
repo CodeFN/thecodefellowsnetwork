@@ -26,6 +26,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 DEBUG = False
 
 ALLOWED_HOSTS = [
+    'ec2-34-208-237-26.us-west-2.compute.amazonaws.com',
+    '34.208.237.26',
     'ec2-52-35-131-204.us-west-2.compute.amazonaws.com',
     '52.35.131.204',
     'localhost',
