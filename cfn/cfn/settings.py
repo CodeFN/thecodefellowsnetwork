@@ -25,19 +25,21 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [
-    'ec2-34-208-237-26.us-west-2.compute.amazonaws.com',
-    '34.208.237.26',
-    'ec2-52-35-131-204.us-west-2.compute.amazonaws.com',
-    '52.35.131.204',
-    'localhost',
-    '127.0.0.1',
-    'codefellows.network',
-    'www.codefellows.network',
-    'http://www.codefellows.network',
-    '52.35.35.64',
-    'ec2-52-35-35-64.us-west-2.compute.amazonaws.com',
-]
+# ALLOWED_HOSTS = [
+#     'ec2-34-208-237-26.us-west-2.compute.amazonaws.com',
+#     '34.208.237.26',
+#     'ec2-52-35-131-204.us-west-2.compute.amazonaws.com',
+#     '52.35.131.204',
+#     'localhost',
+#     '127.0.0.1',
+#     'codefellows.network',
+#     'www.codefellows.network',
+#     'http://www.codefellows.network',
+#     '52.35.35.64',
+#     'ec2-52-35-35-64.us-west-2.compute.amazonaws.com',
+# ]
+
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split()
 
 # Application definition
 
@@ -53,6 +55,11 @@ INSTALLED_APPS = [
     'profile_cfn',
     'posts',
 ]
+
+INTERNAL_IPS = (
+    '0.0.0.0',
+    '127.0.0.1',
+)
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
